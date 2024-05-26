@@ -1,10 +1,20 @@
 @import '../styles/reset';
+@import '../styles/mixins/breakpoints';
+
 
 
 
 
 
 .container {
+    padding: 0 20px;
     max-width: 1200px;
     margin: 0 auto;
+}
+
+
+@include breakpoint(xl) {
+    container {
+        padding: 0;
+    }
 }

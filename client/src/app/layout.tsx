@@ -2,6 +2,7 @@ import { Header } from "@/widgets/header";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import '../shared/styles/global.scss'
+import ReduxToolkitProvider from "@/shared/providers/reduxToolkit";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,8 +19,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
+        <ReduxToolkitProvider>
         <Header/>
         {children}
+        </ReduxToolkitProvider>
         </body>
     </html>
   );

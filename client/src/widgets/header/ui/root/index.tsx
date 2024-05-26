@@ -2,7 +2,7 @@
 import React from 'react'
 import styles from './Header.module.scss'
 import Link from 'next/link'
-import { MdAccountCircle } from 'react-icons/md'
+import Account from '../components/account'
 
 
 export const Header = () => {
@@ -19,7 +19,7 @@ export const Header = () => {
                     </ul>
                 </nav>
                 <div className={styles.icons} >
-                    <div className={styles.account} ><MdAccountCircle /></div>
+                    <div className={styles.account} ><Account/></div>
                 </div>
             </div>
         </div>
