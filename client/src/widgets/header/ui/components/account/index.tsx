@@ -37,31 +37,7 @@ console.log(watch('email'))
       <div onClick={() => setIsOpen(true)} className={styles.root} ><MdAccountCircle /></div>
   
         <Modal footer={false} className={styles.modal} title='Авторизация' open={isOpen} onCancel={() => setIsOpen(false)} >
-          <form onSubmit={handleSubmit(onSubmit)} className={styles.form} action="">
-            <div className={styles.formItem} >
-              <label htmlFor={'email'}>Email</label>
-              <Controller
-              name='email'
-              control={control}
-              render={({field})=> 
-                <Input {...field} id={'email'}/>
-              }
-              />
-
-            </div>
-
-            <div className={styles.formItem} >
-              <label htmlFor={'password'}>Пароль</label>
-              <Controller
-              name='password'
-              control={control}
-              render={({field})=> 
-                <Input {...field} id={'password'}/>
-              }
-              />
-            </div>
-          <Button onClick={handleSubmit(onSubmit)} className={styles.submitBtn} type='primary' >Отправить</Button>
-          </form>
+    
         </Modal>
 
     </>

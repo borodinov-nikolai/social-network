@@ -3,6 +3,7 @@ import React from 'react'
 import styles from './Header.module.scss'
 import Link from 'next/link'
 import Account from '../components/account'
+import { SignUp } from '@/features/signUp'
 
 
 export const Header = () => {
@@ -19,7 +20,7 @@ export const Header = () => {
                     </ul>
                 </nav>
                 <div className={styles.icons} >
-                    <div className={styles.account} ><Account/></div>
+                    <div className={styles.account} ><SignUp/></div>
                 </div>
             </div>
         </div>
