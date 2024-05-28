@@ -2,17 +2,12 @@
 import React, { useState } from 'react'
 import { MdAccountCircle } from 'react-icons/md'
 import styles from './SignUp.module.scss'
-import { Button, ConfigProvider, Input, Modal } from 'antd'
+import { Button, Input, Modal } from 'antd'
 import { Controller, SubmitHandler, useForm } from 'react-hook-form'
-import { useSignUpMutation } from '@/entities/auth'
+import { ISignUpDto, useSignUpMutation } from '@/entities/auth'
 
 
 
-interface IFields {
-  login: string
-  email: string
-  password: string
-}
 
 
 export const SignUp = () => {
@@ -26,14 +21,17 @@ export const SignUp = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false)
   const [signUp] = useSignUpMutation()
 
-  const onSubmit: SubmitHandler<IFields> = (data) => {
+  const onSubmit: SubmitHandler<ISignUpDto> = async (data) => {
     if (data) {
-    signUp(data)
+    const res = await signUp(data) 
+    if("data" in res && res.data) {
+      window.localStorage.setItem('jwt', res.data.jwt)
+    } 
     setIsOpen(false)
     }
 
   }
-console.log(watch('email'))
+
   return (
     <>
       <div onClick={() => setIsOpen(true)} className={styles.root} ><MdAccountCircle /></div>

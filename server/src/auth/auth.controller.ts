@@ -22,9 +22,9 @@ export class AuthController {
   @Post('/sign-up')
   async signUp(@Body() body: SignUpDto, @Res({passthrough: true}) res:Response){
     
-    const tokens = await this.authService.signUp(body)
+    const {accessToken, refreshToken} = await this.authService.signUp(body)
      
-    res.cookie('refreshToken', tokens.refreshToken, {httpOnly: true, maxAge: 30 * 24 * 60 * 60 * 1000})
-    return tokens.accessToken
+    res.cookie('refreshToken', refreshToken, {httpOnly: true, maxAge: 30 * 24 * 60 * 60 * 1000})
+    return {jwt: accessToken}
   }
 }
