@@ -12,10 +12,8 @@ const extendedApi = emptySplitApi.injectEndpoints({
                 body: {
                     ...data
                 }
-            }),
-            invalidatesTags: ['User']
-        }),
-      
+            })
+        })
     }),
     overrideExisting: false
 })

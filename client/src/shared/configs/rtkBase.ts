@@ -7,7 +7,7 @@ const baseQuery = fetchBaseQuery({
   prepareHeaders: (headers)=> {
     const token = localStorage.getItem('jwt')
     if(token) {
-      headers.set('autorization', `Bearer ${token}`)
+      headers.set('authorization', `Bearer ${token}`)
     }
     return headers
   }

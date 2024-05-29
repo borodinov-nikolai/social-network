@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import '../shared/styles/global.scss'
 import ReduxToolkitProvider from "@/shared/providers/reduxToolkit";
+import { GetUser } from "@/entities/user";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,6 +21,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <ReduxToolkitProvider>
+          <GetUser/>
         <Header/>
         {children}
         </ReduxToolkitProvider>

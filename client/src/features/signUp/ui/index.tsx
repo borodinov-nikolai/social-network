@@ -5,32 +5,41 @@ import styles from './SignUp.module.scss'
 import { Button, Input, Modal } from 'antd'
 import { Controller, SubmitHandler, useForm } from 'react-hook-form'
 import { ISignUpDto, useSignUpMutation } from '@/entities/auth'
+import { useGetMeQuery } from '@/entities/user'
 
 
 
 
 
 export const SignUp = () => {
-  const { register, handleSubmit, watch, control } = useForm({
+  const [isOpen, setIsOpen] = useState<boolean>(false)
+  const { handleSubmit, watch, control, reset } = useForm({
     defaultValues: {
       login: '',
       email: '',
       password: ''
     }
   })
-  const [isOpen, setIsOpen] = useState<boolean>(false)
   const [signUp] = useSignUpMutation()
+  const {refetch} = useGetMeQuery(null)
 
   const onSubmit: SubmitHandler<ISignUpDto> = async (data) => {
     if (data) {
     const res = await signUp(data) 
     if("data" in res && res.data) {
       window.localStorage.setItem('jwt', res.data.jwt)
-    } 
+      refetch()
+      reset()
+    } else if( 'error' in res) {
+      console.error(res.error)
+    }
     setIsOpen(false)
     }
 
   }
+   
+
+ 
 
   return (
     <>

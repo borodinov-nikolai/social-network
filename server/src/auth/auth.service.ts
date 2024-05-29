@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { UsersService } from 'src/users/users.service';
 import { SignUpDto } from './dtos/signUp.dto';
-import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt'
 import { TokenService } from './token.service';
 import { DbService } from 'src/db/db.service';
@@ -24,6 +23,16 @@ signUp = async (data: SignUpDto)=> {
       }
    })
    return tokens
+}
+
+getMe = async (token: string)=> {
+  const {id}: {id: number} = await this.tokenService.decodeToken(token)
+  const user = await this.db.user.findUnique({
+   where: {
+      id
+   }
+  })
+       return user
 }
 
 
