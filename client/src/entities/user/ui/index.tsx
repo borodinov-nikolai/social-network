@@ -5,8 +5,7 @@ import { useGetMeQuery } from '../api'
 
 
 export const GetUser = () => {
-    const {data: user} = useGetMeQuery(null)
-    console.log(user)
+    const {data: user} = useGetMeQuery()
   return (
     <></>
   )

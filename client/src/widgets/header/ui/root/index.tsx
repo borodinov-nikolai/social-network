@@ -2,11 +2,15 @@
 import React from 'react'
 import styles from './Header.module.scss'
 import Link from 'next/link'
+import { Authorization } from '@/widgets/authorization'
+import { useGetMeQuery } from '@/entities/user'
 import Account from '../components/account'
-import { SignUp } from '@/features/signUp'
+
 
 
 export const Header = () => {
+    const {data: user, isLoading} =  useGetMeQuery()
+    console.log(user)
   return (
     <div className={styles.header} >
         <div className="container">
@@ -20,7 +24,8 @@ export const Header = () => {
                     </ul>
                 </nav>
                 <div className={styles.icons} >
-                    <div className={styles.account} ><SignUp/></div>
+                    {user && <p>{user.login}</p> }
+                    {!isLoading && <div className={styles.account} >{user ? <Account/> : <Authorization/>}</div>}
                 </div>
             </div>
         </div>

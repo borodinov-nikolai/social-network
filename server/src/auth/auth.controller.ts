@@ -3,8 +3,9 @@ import { AuthService } from './auth.service';
 import { SignUpDto } from './dtos/signUp.dto';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { User } from 'src/users/entities/user.entity';
-import { Response } from 'express';
+import { Request, Response } from 'express';
 import { RolesGuard } from './roles.guard';
+import { SignInDto } from './dtos/signIn.dto';
 
 
 
@@ -29,6 +30,32 @@ export class AuthController {
     return {jwt: accessToken}
   }
 
+  @ApiOperation({summary: 'Авторизация пользователя'})
+  @ApiResponse({
+    status: 201,
+    description: 'Успешная авторизация пользователя', 
+    type: User
+  })
+  @Post('/sign-in')
+  async signIn(@Body() body: SignInDto, @Res({passthrough: true}) res:Response){
+    
+    const {accessToken, refreshToken} = await this.authService.signIn(body)
+     
+    res.cookie('refreshToken', refreshToken, {httpOnly: true, maxAge: 30 * 24 * 60 * 60 * 1000})
+    return {jwt: accessToken}
+  }
+  
+  @ApiOperation({summary: 'Выход из аккаунта'})
+  @ApiResponse({
+    status: 200,
+    description: 'Успешно', 
+    type: null
+  })
+
+  @Post('/sign-out')
+  async signOut(@Res() res: Response){
+         res.clearCookie('refreshToken')
+  }
   
   @ApiOperation({summary: 'Регистрация нового пользователя'})
   @ApiResponse({
@@ -41,7 +68,6 @@ export class AuthController {
   async getMe(@Req() req: Request){  
        const token = req.headers['authorization']?.split(' ')[1]
        return await this.authService.getMe(token)
-
   }
 
 

@@ -1,5 +1,6 @@
 import { emptySplitApi } from "@/shared/configs/rtkBase";
 import { ISignUpDto } from "../interfaces/signUp.dto";
+import { ISignInDto } from "../interfaces/signIn.dto";
 
 
 
@@ -13,11 +14,27 @@ const extendedApi = emptySplitApi.injectEndpoints({
                     ...data
                 }
             })
-        })
+        }),
+        signIn: build.mutation< {jwt: string}, ISignInDto>({
+            query: (data)=> ({
+                url: '/auth/sign-in',
+                method: 'POST',
+                body: {
+                    ...data
+                }
+            })
+        }),
+        signOut: build.mutation<null, void>({
+            query: ()=> ({
+                url: '/auth/sign-out',
+                method: 'POST'
+            })
+        }),
+      
     }),
     overrideExisting: false
 })
 
 
 
-export const {useSignUpMutation} = extendedApi
+export const {useSignUpMutation, useSignInMutation, useSignOutMutation} = extendedApi

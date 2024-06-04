@@ -1,0 +1,19 @@
+
+
+
+.root {
+    cursor: pointer;
+    svg {
+       width: 35px;
+       height: auto;
+    }
+}
+
+.formSwitch {
+    text-align: center;
+    color: blue;
+    span {
+        cursor: pointer;
+        border-bottom: 1px solid blue;
+    }
+}

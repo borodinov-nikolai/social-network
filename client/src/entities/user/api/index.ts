@@ -1,4 +1,5 @@
 import { emptySplitApi } from "@/shared/configs/rtkBase";
+import { IUser } from "../interfaces/user";
 
 
 
@@ -6,7 +7,7 @@ import { emptySplitApi } from "@/shared/configs/rtkBase";
 
 const extendedApi = emptySplitApi.injectEndpoints({
     endpoints: (build)=>({
-        getMe: build.query({
+        getMe: build.query<IUser, void>({
             query: ()=> '/auth/me',
             providesTags: ['User']
         })
