@@ -12,8 +12,8 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.enableCors({ origin: true, credentials: true })
   app.setGlobalPrefix('api')
-  app.useGlobalPipes( new ValidationPipe())
   app.use(cookieParser())
+  app.useGlobalPipes( new ValidationPipe())
   const config = new DocumentBuilder()
     .setTitle('Practice api')
     .setDescription('The practice api description')

@@ -1,4 +1,4 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { ForbiddenException, Injectable, UnauthorizedException } from '@nestjs/common';
 import { UsersService } from 'src/users/users.service';
 import { SignUpDto } from './dtos/signUp.dto';
 import * as bcrypt from 'bcrypt'
@@ -47,22 +47,52 @@ signIn = async (data: SignInDto)=> {
          })
          return tokens
       } else {
-         throw new UnauthorizedException('deny')
+         throw new UnauthorizedException()
       }
 }
 
+refresh = async (token: string | undefined)=> {
+       const payload : {id: number, login: string, role: 'user' | 'admin'} | undefined = await this.tokenService.decodeToken(token)
+       if(payload) {
+         const tokens =  await this.tokenService.createTokens(payload)
+          await this.db.refreshToken.update({
+            where: {
+               userId: payload.id
+            },
+            data: {
+                  token: tokens.refreshToken
+            }
+          })
 
-
-getMe = async (token: string)=> {
-   if(token) {
-      const {id}: {id: number} = await this.tokenService.decodeToken(token)
-      const user = await this.db.user.findUnique({
-       where: {
-          id
+          return tokens
+       } else {
+         throw new UnauthorizedException()
        }
-      })
-          delete user.password
-           return user
+
+}
+
+getMe = async (token: string | undefined)=> {
+   if(token) {
+      const payload: {id:number} | undefined = await this.tokenService.decodeToken(token)
+      if(payload) {
+         try {
+            const user = await this.db.user.findUnique({
+               where: {
+                  id: payload?.id
+               }
+              })
+                  delete user.password
+                   return user
+         } catch(e) {
+            console.error(e)
+            throw new ForbiddenException()
+         } 
+      
+      } else {
+         throw new ForbiddenException()
+      }
+   } else {
+      throw new ForbiddenException()
    }
 
 }

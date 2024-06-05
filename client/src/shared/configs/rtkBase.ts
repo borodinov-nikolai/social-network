@@ -4,6 +4,7 @@ import {BaseQueryFn, createApi, FetchArgs, fetchBaseQuery, FetchBaseQueryError }
 
 const baseQuery = fetchBaseQuery({
   baseUrl: process.env.NEXT_PUBLIC_SERVER_API,
+  credentials: 'include',
   prepareHeaders: (headers)=> {
     const token = localStorage.getItem('jwt')
     if(token) {

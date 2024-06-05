@@ -1,11 +1,11 @@
-import { Body, Controller, Get, Post, Req, Res, UseGuards, UsePipes, ValidationPipe} from '@nestjs/common';
+import { Body, Controller, Get, Post, Req, Res} from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { SignUpDto } from './dtos/signUp.dto';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { User } from 'src/users/entities/user.entity';
 import { Request, Response } from 'express';
-import { RolesGuard } from './roles.guard';
 import { SignInDto } from './dtos/signIn.dto';
+
 
 
 
@@ -23,9 +23,9 @@ export class AuthController {
   })
   @Post('/sign-up')
   async signUp(@Body() body: SignUpDto, @Res({passthrough: true}) res:Response){
-
+   
     const {accessToken, refreshToken} = await this.authService.signUp(body)
-     
+  
     res.cookie('refreshToken', refreshToken, {httpOnly: true, maxAge: 30 * 24 * 60 * 60 * 1000})
     return {jwt: accessToken}
   }
@@ -41,9 +41,7 @@ export class AuthController {
   })
   @Post('/sign-in')
   async signIn(@Body() body: SignInDto, @Res({passthrough: true}) res:Response){
-    
     const {accessToken, refreshToken} = await this.authService.signIn(body)
-     
     res.cookie('refreshToken', refreshToken, {httpOnly: true, maxAge: 30 * 24 * 60 * 60 * 1000})
     return {jwt: accessToken}
   }
@@ -59,8 +57,10 @@ export class AuthController {
   })
   @Post('/refresh')
   async refresh(@Res({passthrough: true}) res:Response, @Req() req: Request){
- 
-   
+  const token = req.cookies.refreshToken
+   const {accessToken, refreshToken} = await this.authService.refresh(token)
+     res.cookie('refreshToken', refreshToken, {httpOnly: true, maxAge: 30 * 24 * 60 * 60 * 1000})
+   return {jwt: accessToken}
   }
 
 
@@ -74,7 +74,7 @@ export class AuthController {
     type: null
   })
   @Post('/sign-out')
-  async signOut(@Res() res: Response){
+  async signOut(@Res({passthrough: true}) res: Response){
          res.clearCookie('refreshToken')
   }
   
@@ -89,6 +89,7 @@ export class AuthController {
   })
 
   @Get('/me')
+
   async getMe(@Req() req: Request){  
        const token = req.headers['authorization']?.split(' ')[1]
        return await this.authService.getMe(token)

@@ -7,10 +7,11 @@ import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { JwtModule } from '@nestjs/jwt';
 
+
 @Module({
   imports: [ConfigModule.forRoot({
     envFilePath: '.env'
-  }), DbModule, AuthModule, UsersModule, JwtModule.register({
+  }), DbModule, AuthModule, UsersModule,  JwtModule.register({
     global: true,
     secret: process.env.JWT_SECRET,
     signOptions: {expiresIn: '1d'}
