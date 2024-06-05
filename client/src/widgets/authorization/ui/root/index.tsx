@@ -14,7 +14,7 @@ export const Authorization = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false)
   const [isSignUp, setIsSignUp] = useState<boolean>(false)
 
-  const { handleSubmit, control, reset } = useForm({
+  const { handleSubmit, control, reset, watch } = useForm({
     defaultValues: {
       login: '',
       email: '',
@@ -27,7 +27,7 @@ export const Authorization = () => {
 
   const onSubmit: SubmitHandler<ISignUpDto | ISignInDto> = async (data) => {
     if (data) {
-
+       console.log(data)
       const res = isSignUp ? await signUp(data as ISignUpDto) : await signIn(data as ISignInDto)
       if ("data" in res && res.data) {
         window.localStorage.setItem('jwt', res.data.jwt)
@@ -42,7 +42,7 @@ export const Authorization = () => {
   }
 
 
-
+console.log(watch('password'))
 
   return (
     <>

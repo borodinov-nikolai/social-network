@@ -19,13 +19,13 @@ model User {
   login String
   email String @unique
   password String
-  role Role @default(USER)
+  role Role @default(user)
   refreshToken RefreshToken?
 }
 
 enum Role {
-  USER
-  ADMIN
+  user
+  admin
 }
 
 model RefreshToken {

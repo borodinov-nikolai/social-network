@@ -61,6 +61,7 @@ getMe = async (token: string)=> {
           id
        }
       })
+          delete user.password
            return user
    }
 

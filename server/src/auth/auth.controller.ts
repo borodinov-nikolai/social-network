@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Req, Res, UseGuards} from '@nestjs/common';
+import { Body, Controller, Get, Post, Req, Res, UseGuards, UsePipes, ValidationPipe} from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { SignUpDto } from './dtos/signUp.dto';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
@@ -23,16 +23,19 @@ export class AuthController {
   })
   @Post('/sign-up')
   async signUp(@Body() body: SignUpDto, @Res({passthrough: true}) res:Response){
-    
+
     const {accessToken, refreshToken} = await this.authService.signUp(body)
      
     res.cookie('refreshToken', refreshToken, {httpOnly: true, maxAge: 30 * 24 * 60 * 60 * 1000})
     return {jwt: accessToken}
   }
 
+
+
+
   @ApiOperation({summary: 'Авторизация пользователя'})
   @ApiResponse({
-    status: 201,
+    status: 200,
     description: 'Успешная авторизация пользователя', 
     type: User
   })
@@ -44,6 +47,25 @@ export class AuthController {
     res.cookie('refreshToken', refreshToken, {httpOnly: true, maxAge: 30 * 24 * 60 * 60 * 1000})
     return {jwt: accessToken}
   }
+
+
+
+
+  @ApiOperation({summary: 'Обновление токенов'})
+  @ApiResponse({
+    status: 200,
+    description: 'Успешно', 
+    type: null
+  })
+  @Post('/refresh')
+  async refresh(@Res({passthrough: true}) res:Response, @Req() req: Request){
+ 
+   
+  }
+
+
+
+
   
   @ApiOperation({summary: 'Выход из аккаунта'})
   @ApiResponse({
@@ -51,16 +73,18 @@ export class AuthController {
     description: 'Успешно', 
     type: null
   })
-
   @Post('/sign-out')
   async signOut(@Res() res: Response){
          res.clearCookie('refreshToken')
   }
   
-  @ApiOperation({summary: 'Регистрация нового пользователя'})
+
+ 
+  
+  @ApiOperation({summary: 'Получение данных пользователя'})
   @ApiResponse({
-    status: 201,
-    description: 'Успешная регистрация нового пользователя', 
+    status: 200,
+    description: 'Успешно', 
     type: User
   })
 
