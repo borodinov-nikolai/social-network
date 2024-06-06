@@ -13,8 +13,7 @@ import { JwtModule } from '@nestjs/jwt';
     envFilePath: '.env'
   }), DbModule, AuthModule, UsersModule,  JwtModule.register({
     global: true,
-    secret: process.env.JWT_SECRET,
-    signOptions: {expiresIn: '1d'}
+    secret: process.env.JWT_SECRET
   })],
   controllers: [AppController],
   providers: [AppService],

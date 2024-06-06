@@ -35,7 +35,7 @@ export class AuthController {
 
   @ApiOperation({summary: 'Авторизация пользователя'})
   @ApiResponse({
-    status: 200,
+    status: 201,
     description: 'Успешная авторизация пользователя', 
     type: User
   })
@@ -51,16 +51,19 @@ export class AuthController {
 
   @ApiOperation({summary: 'Обновление токенов'})
   @ApiResponse({
-    status: 200,
+    status: 201,
     description: 'Успешно', 
     type: null
   })
   @Post('/refresh')
   async refresh(@Res({passthrough: true}) res:Response, @Req() req: Request){
-  const token = req.cookies.refreshToken
-   const {accessToken, refreshToken} = await this.authService.refresh(token)
-     res.cookie('refreshToken', refreshToken, {httpOnly: true, maxAge: 30 * 24 * 60 * 60 * 1000})
-   return {jwt: accessToken}
+  const refreshToken = req.cookies.refreshToken
+   const tokens = await this.authService.refresh(refreshToken)
+   if(tokens) {
+    res.cookie('refreshToken', tokens.refreshToken, {httpOnly: true, maxAge: 30 * 24 * 60 * 60 * 1000})
+    return {jwt: tokens.accessToken}
+   }
+
   }
 
 
@@ -69,7 +72,7 @@ export class AuthController {
   
   @ApiOperation({summary: 'Выход из аккаунта'})
   @ApiResponse({
-    status: 200,
+    status: 201,
     description: 'Успешно', 
     type: null
   })

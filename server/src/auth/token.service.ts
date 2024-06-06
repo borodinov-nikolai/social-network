@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, UnauthorizedException } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
 
 
@@ -8,25 +8,27 @@ import { JwtService } from "@nestjs/jwt";
 export class TokenService {
     constructor(private readonly jwtService: JwtService){}
 
-     async createTokens({id, login, role}: {id: number, login: string, role: 'user' | 'admin'}) {
+     async createTokens({id, login, role}: {id: number, login: string, role: 'user' | 'admin'}): Promise<{accessToken: string, refreshToken: string}> {
       try {
-         const accessToken = await this.jwtService.signAsync({id, login, role})
-         const refreshToken = await this.jwtService.signAsync({id, login, role})
+         const accessToken = await this.jwtService.signAsync({id, login, role}, {expiresIn: process.env.ACCESS_TOKEN_EXPIRES_IN})
+         const refreshToken = await this.jwtService.signAsync({id, login, role}, {expiresIn: process.env.REFRESH_TOKEN_EXPIRES_IN})
          return {accessToken, refreshToken}
       } catch(e) {
-         console.error(e)
+         console.error('Error creating tokens:', e)
+         throw new Error('Unable to create tokens');
       }
             
       }
 
 
 
-      async decodeToken(token: string) {
+      async decodeToken(token: string): Promise<any> {
          try {
-            await this.jwtService.verifyAsync(token, {secret: process.env.JWT_SECRET})
+            await this.jwtService.verifyAsync(token)
             return await this.jwtService.decode(token)
          } catch(e) {
-            console.error(e)
+            console.error('Error decoding token:', e)
+            throw new UnauthorizedException('Invalid token');
          }
       }
 }

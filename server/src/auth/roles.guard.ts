@@ -1,7 +1,6 @@
-import { CanActivate, ExecutionContext, Injectable, UnauthorizedException } from "@nestjs/common";
+import { CanActivate, ExecutionContext, Injectable } from "@nestjs/common";
 import { Reflector } from "@nestjs/core";
 import { Request } from "express";
-import { Observable } from "rxjs";
 import { Roles } from "./roles.decorator";
 import { TokenService } from "./token.service";
 
@@ -13,11 +12,11 @@ export class RolesGuard implements CanActivate {
    async canActivate(
         context: ExecutionContext,
    ): Promise<boolean> {
-    const roles = this.reflector.get(Roles, context.getHandler())
+    const roles = this.reflector.get<string[]>(Roles, context.getHandler())
     
-    if(roles.includes('all')){
-       return true
-      }
+    if(!roles) {
+      return true
+    }
 
       const request = context.switchToHttp().getRequest<Request>()
       const token = request?.headers?.authorization?.split(' ')[1]

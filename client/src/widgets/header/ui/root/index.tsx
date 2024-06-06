@@ -1,5 +1,5 @@
 'use client'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import styles from './Header.module.scss'
 import Link from 'next/link'
 import { Authorization } from '@/widgets/authorization'
@@ -8,9 +8,12 @@ import Account from '../components/account'
 
 
 
+
 export const Header = () => {
-    const {data: user, isLoading} =  useGetMeQuery()
-    console.log(user)
+    const {data: user, isLoading} = useGetMeQuery()
+
+
+
   return (
     <div className={styles.header} >
         <div className="container">
