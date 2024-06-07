@@ -1,10 +1,11 @@
-import { Body, Controller, Get, Post, Req, Res} from '@nestjs/common';
+import { Body, Controller, Get, Post, Query, Req, Res} from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { SignUpDto } from './dtos/signUp.dto';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { User } from 'src/users/entities/user.entity';
 import { Request, Response } from 'express';
 import { SignInDto } from './dtos/signIn.dto';
+import axios from 'axios';
 
 
 
@@ -96,6 +97,45 @@ export class AuthController {
   async getMe(@Req() req: Request){  
        const token = req.headers['authorization']?.split(' ')[1]
        return await this.authService.getMe(token)
+  }
+
+
+  @ApiOperation({summary: 'Авторизация через Google'})
+  @ApiResponse({
+    status: 201,
+    description: 'Успешно', 
+    type: User
+  })
+
+  @Get('/google')
+
+  async oauthGoogle(@Res() res: Response, @Query('code') code){  
+         console.log(code)
+         const url = 'https://oauth2.googleapis.com/token';
+    const client_id = '1027607799493-leqd0k3htg8dljcjtbea14nn26tgil9o.apps.googleusercontent.com'; // Ваш клиентский идентификатор
+    const client_secret = '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'; 
+         try {
+          const response = await axios.post(url, {
+            code,
+            client_id,
+            client_secret,
+            redirect_uri: 'http://localhost:5000/api/auth/google',
+            grant_type: 'authorization_code',
+          })
+          const token = response?.data?.access_token
+          const user = await axios.get('https://people.googleapis.com/v1/people/me' , {
+            params: {
+              personFields: 'names, emailAddresses',
+            },
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          })
+          console.log(user.data)
+         } catch(e){
+          console.error(e)
+          }
+        // res.redirect('http://localhost:3000')
   }
 
 

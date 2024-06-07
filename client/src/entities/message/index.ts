@@ -1,0 +1,1 @@
+export {useGetMessageQuery} from './api'

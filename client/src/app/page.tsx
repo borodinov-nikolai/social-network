@@ -1,11 +1,12 @@
-import styles from "./page.module.css";
+import { HomePage } from "@/views/homePage";
+
 
 
 
 export default function Home() {
   return (
-    <main >
-     
-    </main>
+    <>
+    <HomePage/>
+    </>
   );
 }

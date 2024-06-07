@@ -10,7 +10,7 @@ export class AppController {
   @Get()
   @UseGuards(RolesGuard)
   @Roles(['user'])
-  getResponse(): string {
-    return 'Ответ от сервера';
+  getResponse(): {message: string} {
+    return {message: 'Ответ от сервера'};
   }
 }
