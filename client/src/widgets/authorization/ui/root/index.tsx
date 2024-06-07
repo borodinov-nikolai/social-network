@@ -52,7 +52,7 @@ export const Authorization = () => {
       <Modal footer={false} className={styles.modal} title={isSignUp ? 'Регистрация' : 'Авторизация'} open={isOpen} onCancel={() => setIsOpen(false)} >
         {!isSignUp && <SignInForm handleSubmit={handleSubmit} control={control} onSubmit={onSubmit} />}
         {isSignUp && <SignUpForm handleSubmit={handleSubmit} control={control} onSubmit={onSubmit} />}
-        <Link href='https://accounts.google.com/o/oauth2/auth?scope=email%20profile&prompt=select_account&response_type=code&redirect_uri=http://localhost:5000/api/auth/google&client_id=1027607799493-leqd0k3htg8dljcjtbea14nn26tgil9o.apps.googleusercontent.com' > <FcGoogle /> Войти через google</Link>
+        <Link className={styles.oauthLink} href='https://accounts.google.com/o/oauth2/auth?scope=email%20profile&prompt=select_account&response_type=code&redirect_uri=http://localhost:5000/api/auth/google&client_id=1027607799493-leqd0k3htg8dljcjtbea14nn26tgil9o.apps.googleusercontent.com' > <FcGoogle /> Войти через google</Link>
         {!isSignUp && <p className={styles.formSwitch} >Нет аккаунта? <span onClick={() => setIsSignUp(true)} >регистрация</span></p>}
         {isSignUp && <p className={styles.formSwitch} >Есть аккаунт? <span onClick={() => setIsSignUp(false)} >авторизация</span></p>}
       </Modal>

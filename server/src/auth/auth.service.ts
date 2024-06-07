@@ -5,6 +5,7 @@ import * as bcrypt from 'bcrypt'
 import { TokenService } from './token.service';
 import { DbService } from 'src/db/db.service';
 import { SignInDto } from './dtos/signIn.dto';
+import axios from 'axios';
 
 @Injectable()
 export class AuthService {
@@ -27,7 +28,7 @@ export class AuthService {
    }
 
    signIn = async (data: SignInDto) => {
-      
+
       const user = await this.db.user.findUnique({
          where: {
             email: data.email
@@ -39,23 +40,23 @@ export class AuthService {
          throw new UnauthorizedException()
       }
 
-         const passwordCheck = await bcrypt.compare(data.password, user.password)
-         if (passwordCheck) {
-            const { id, login, role } = user
-            const tokens = await this.tokenService.createTokens({ id, login, role })
-            await this.db.refreshToken.update({
-               where: {
-                  userId: id
-               },
-               data: {
-                  token: tokens.refreshToken
-               }
-            })
-            return tokens
-         } else {
-            throw new UnauthorizedException()
-         }
-      
+      const passwordCheck = await bcrypt.compare(data.password, user.password)
+      if (passwordCheck) {
+         const { id, login, role } = user
+         const tokens = await this.tokenService.createTokens({ id, login, role })
+         await this.db.refreshToken.update({
+            where: {
+               userId: id
+            },
+            data: {
+               token: tokens.refreshToken
+            }
+         })
+         return tokens
+      } else {
+         throw new UnauthorizedException()
+      }
+
 
 
    }
@@ -108,7 +109,6 @@ export class AuthService {
          throw new ForbiddenException()
       }
 
-
       try {
          const user = await this.db.user.findUnique({
             where: {
@@ -124,11 +124,36 @@ export class AuthService {
          console.error(e)
          throw new ForbiddenException()
       }
-
-
-
-
    }
 
+
+   google = async (code: string)=> {
+      console.log(code)
+      const url = 'https://oauth2.googleapis.com/token';
+ const client_id = '1027607799493-leqd0k3htg8dljcjtbea14nn26tgil9o.apps.googleusercontent.com'; // Ваш клиентский идентификатор
+ const client_secret = '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'; 
+      try {
+       const response = await axios.post(url, {
+         code,
+         client_id,
+         client_secret,
+         grant_type: 'authorization_code',
+         redirect_uri: 'http://localhost:5000/api/auth/google',
+       })
+       const token = response?.data?.access_token
+       const user = await axios.get('https://people.googleapis.com/v1/people/me' , {
+         params: {
+           personFields: 'names, emailAddresses',
+         },
+         headers: {
+           Authorization: `Bearer ${token}`
+         }
+       })
+       console.log(user.data)
+      } catch(e){
+       console.error(e)
+       }
+     // res.redirect('http://localhost:3000')
+   }
 
 }
