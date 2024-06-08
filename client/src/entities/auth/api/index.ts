@@ -30,6 +30,15 @@ const extendedApi = emptySplitApi.injectEndpoints({
                 method: 'POST'
             })
         }),
+        googleOauth: build.mutation<{jwt: string}, {code: string}>({
+            query: (data)=> ({
+                url: '/auth/google',
+                method: 'POST',
+                body: {
+                    ...data
+                }
+            })
+        })
       
     }),
     overrideExisting: false
@@ -37,4 +46,4 @@ const extendedApi = emptySplitApi.injectEndpoints({
 
 
 
-export const {useSignUpMutation, useSignInMutation, useSignOutMutation} = extendedApi
+export const {useSignUpMutation, useSignInMutation, useSignOutMutation, useGoogleOauthMutation} = extendedApi

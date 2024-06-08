@@ -1,10 +1,13 @@
 @import '../styles/reset';
 @import '../styles/mixins/breakpoints';
+@import '../styles/variables/theme';
 
 
 
 
-
+body {
+    background: var(--body-background);
+}
 
 .container {
     padding: 0 20px;

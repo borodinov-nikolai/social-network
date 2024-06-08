@@ -1,21 +1,27 @@
 'use client'
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import styles from './Header.module.scss'
 import Link from 'next/link'
 import { Authorization } from '@/widgets/authorization'
 import { useGetMeQuery } from '@/entities/user'
 import Account from '../components/account'
-
+import { useAppDispatch, useAppSelector } from '@/shared/hooks/reduxToolkit'
+import { setTheme, themeSelector } from '@/entities/theme'
+import { CiLight } from 'react-icons/ci'
+import cs from 'classnames'
 
 
 
 export const Header = () => {
+    const dispatch = useAppDispatch()
     const {data: user, isLoading} = useGetMeQuery()
+    const theme = useAppSelector(themeSelector)
 
+    
 
 
   return (
-    <div className={styles.header} >
+    <header className={cs(styles.root, styles[theme])} >
         <div className="container">
             <div className={styles.inner} >
                 <div className={styles.logo} >
@@ -29,9 +35,10 @@ export const Header = () => {
                 <div className={styles.icons} >
                     {user && <p>{user.login}</p> }
                     {!isLoading && <div className={styles.account} >{user ? <Account/> : <Authorization/>}</div>}
+                    <div onClick={()=> dispatch(setTheme())} className={styles.themeToggle} ><CiLight/></div>
                 </div>
             </div>
         </div>
-    </div>
+    </header>
   )
 }

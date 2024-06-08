@@ -15,7 +15,6 @@ export class TokenService {
          return {accessToken, refreshToken}
       } catch(e) {
          console.error('Error creating tokens:', e)
-         throw new Error('Unable to create tokens');
       }
             
       }
@@ -28,7 +27,6 @@ export class TokenService {
             return await this.jwtService.decode(token)
          } catch(e) {
             console.error('Error decoding token:', e)
-            throw new UnauthorizedException('Invalid token');
          }
       }
 }

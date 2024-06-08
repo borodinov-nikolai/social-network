@@ -6,6 +6,7 @@ import { TokenService } from './token.service';
 import { DbService } from 'src/db/db.service';
 import { SignInDto } from './dtos/signIn.dto';
 import axios from 'axios';
+import { User } from 'src/users/entities/user.entity';
 
 @Injectable()
 export class AuthService {
@@ -66,8 +67,8 @@ export class AuthService {
          throw new UnauthorizedException()
       }
 
-
       const payload: { id: number, login: string, role: 'user' | 'admin' } | undefined = await this.tokenService.decodeToken(token)
+  
 
       if (!payload) {
          throw new UnauthorizedException()
@@ -79,6 +80,8 @@ export class AuthService {
             userId: payload.id
          }
       })
+
+  
 
       if (userToken?.token === token) {
          const tokens = await this.tokenService.createTokens(payload)
@@ -128,32 +131,73 @@ export class AuthService {
 
 
    google = async (code: string)=> {
-      console.log(code)
       const url = 'https://oauth2.googleapis.com/token';
- const client_id = '1027607799493-leqd0k3htg8dljcjtbea14nn26tgil9o.apps.googleusercontent.com'; // Ваш клиентский идентификатор
- const client_secret = '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'; 
+      const clientId = '1027607799493-leqd0k3htg8dljcjtbea14nn26tgil9o.apps.googleusercontent.com';
+      const clientSecret = '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';
+
       try {
-       const response = await axios.post(url, {
-         code,
-         client_id,
-         client_secret,
-         grant_type: 'authorization_code',
-         redirect_uri: 'http://localhost:5000/api/auth/google',
-       })
-       const token = response?.data?.access_token
-       const user = await axios.get('https://people.googleapis.com/v1/people/me' , {
+         const response = await axios.post(url, {
+            code,
+            client_id: clientId,
+            client_secret: clientSecret,
+            redirect_uri: 'http://localhost:3000/auth/google',
+            grant_type: 'authorization_code',
+          });
+          const token = response?.data?.access_token
+     
+
+       const googleUser = await axios.get('https://people.googleapis.com/v1/people/me',{
          params: {
-           personFields: 'names, emailAddresses',
+           personFields: 'names,emailAddresses',
          },
          headers: {
            Authorization: `Bearer ${token}`
          }
        })
-       console.log(user.data)
+       const userLogin = googleUser.data.names[0].displayName
+       const userEmail = googleUser.data.emailAddresses[0].value
+       
+       let dbUser: User
+        dbUser = await this.db.user.findUnique({
+         where: {
+            email: userEmail
+         }
+       }) 
+     
+       if(!dbUser) {
+         dbUser = await this.db.user.create({
+            data: {
+               login: userLogin,
+               email: userEmail,
+               password: '',
+               role: 'user'
+            }
+         })
+       } 
+
+       if(!dbUser) {
+         throw new UnauthorizedException()
+       }
+       const {id, login, role} = dbUser || {}
+       const tokens = await this.tokenService.createTokens({id, login, role})
+       await this.db.refreshToken.upsert({
+         where: {
+            userId: id
+         },
+         update: {
+            token: tokens.refreshToken
+         },
+         create: {
+            userId: id,
+            token: tokens.refreshToken
+         }
+      })
+       return tokens
       } catch(e){
        console.error(e)
+       throw new UnauthorizedException()
        }
-     // res.redirect('http://localhost:3000')
+  
    }
 
 }

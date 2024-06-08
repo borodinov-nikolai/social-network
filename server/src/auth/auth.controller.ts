@@ -1,7 +1,7 @@
 import { Body, Controller, Get, Post, Query, Req, Res} from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { SignUpDto } from './dtos/signUp.dto';
-import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { User } from 'src/users/entities/user.entity';
 import { Request, Response } from 'express';
 import { SignInDto } from './dtos/signIn.dto';
@@ -106,10 +106,12 @@ export class AuthController {
     type: User
   })
 
-  @Get('/google')
+  @Post('/google')
 
-  async oauthGoogle(@Res() res: Response, @Query('code') code){  
-        await this.authService.google(code)
+  async oauthGoogle(@Res({passthrough: true}) res: Response, @Body() body: {code: string}){  
+        const {accessToken, refreshToken} = await this.authService.google(body.code)
+        res.cookie('refreshToken', refreshToken, {httpOnly: true, maxAge: 30 * 24 * 60 * 60 * 1000})
+        return {jwt: accessToken}
   }
 
 
