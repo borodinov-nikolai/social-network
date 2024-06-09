@@ -26,16 +26,11 @@
     border-bottom: 4px solid var(--font-color);
 }
 
+
+
 .icons {
     display: flex;
     align-items: center;
     gap: 10px;
 }
 
-.themeToggle {
-    cursor: pointer;
-    svg {
-        height: 35px;
-        width: 35px;
-    }
-}

@@ -3,8 +3,8 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import '../shared/styles/global.scss'
 import ReduxToolkitProvider from "@/shared/providers/reduxToolkit";
-import { LoadTheme } from "@/entities/theme";
-import ThemeProvider from "@/shared/providers/themeProvider";
+import { ThemeProvider } from "next-themes";
+
 
 
 const inter = Inter({ subsets: ["latin"] });
@@ -20,14 +20,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="ru" suppressHydrationWarning>
+        <body className={inter.className} >
         <ReduxToolkitProvider>
-      <ThemeProvider font={inter} >
-          <LoadTheme/>
+        <ThemeProvider >
         <Header/>
         {children}
         </ThemeProvider>
         </ReduxToolkitProvider>
+        </body>
     </html>
   );
 }
