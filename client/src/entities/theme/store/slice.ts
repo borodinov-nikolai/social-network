@@ -1,10 +1,12 @@
-import { createSlice } from "@reduxjs/toolkit"
+import { createSlice, PayloadAction } from "@reduxjs/toolkit"
+
+
 
 
 
 
 const initialState = {
-    theme: 'dark-theme'
+    theme: 'light-theme'
 }
 
 
@@ -12,11 +14,16 @@ const slice = createSlice({
     name: 'theme',
     initialState,
     reducers: {
-        setTheme: (state)=> {
-            state.theme = state.theme === 'dark-theme'? 'light-theme': 'dark-theme'
+        setTheme: (state, action: PayloadAction<string>) => {
+            state.theme = action.payload
+            localStorage.setItem('theme', state.theme)
+        },
+        toggleTheme: (state) => {
+            state.theme = state.theme === 'dark-theme' ? 'light-theme' : 'dark-theme'
+            localStorage.setItem('theme', state.theme)
         }
     }
 })
 
-export const {setTheme} = slice.actions
+export const { toggleTheme, setTheme } = slice.actions
 export const themeSlice = slice.reducer

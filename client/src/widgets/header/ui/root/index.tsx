@@ -6,9 +6,10 @@ import { Authorization } from '@/widgets/authorization'
 import { useGetMeQuery } from '@/entities/user'
 import Account from '../components/account'
 import { useAppDispatch, useAppSelector } from '@/shared/hooks/reduxToolkit'
-import { setTheme, themeSelector } from '@/entities/theme'
+import { themeSelector, toggleTheme } from '@/entities/theme'
 import { CiLight } from 'react-icons/ci'
 import cs from 'classnames'
+import { MdDarkMode } from 'react-icons/md'
 
 
 
@@ -35,7 +36,7 @@ export const Header = () => {
                 <div className={styles.icons} >
                     {user && <p>{user.login}</p> }
                     {!isLoading && <div className={styles.account} >{user ? <Account/> : <Authorization/>}</div>}
-                    <div onClick={()=> dispatch(setTheme())} className={styles.themeToggle} ><CiLight/></div>
+                    <div onClick={()=> dispatch(toggleTheme())} className={styles.themeToggle} >{theme === 'dark-theme' ? <CiLight/>: <MdDarkMode/> }</div>
                 </div>
             </div>
         </div>
