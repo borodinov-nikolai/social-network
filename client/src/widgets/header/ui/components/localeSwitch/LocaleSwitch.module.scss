@@ -1,0 +1,16 @@
+.root {
+
+    select {
+        cursor: pointer;
+        width: 50px;
+        border: none;
+        background: transparent;
+        font-size: 24px;
+        color: var(--font-color);
+        option {
+            color: black;
+            padding: 20px;
+        }
+    }
+  
+}

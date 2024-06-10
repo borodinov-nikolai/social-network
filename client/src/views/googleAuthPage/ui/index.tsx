@@ -9,21 +9,25 @@ import { useGetMeQuery } from '@/entities/user'
 export const GoogleAuthPage = () => {
   const router = useRouter()
   const [googleOauth] = useGoogleOauthMutation()
-  const query = qs.parse(window.location.search.slice(1))
+
   const {refetch} = useGetMeQuery()
   useEffect(() => {
       (async ()=> {
-        try{
-          const res = await googleOauth({ code: query.code as string })
-          if(res.data) {
-            const token = res.data.jwt
-            localStorage.setItem('jwt', token)
-            router.replace('/')
-            refetch()
+        if(typeof window !== 'undefined') {
+          try{
+            const query = qs.parse(window.location?.search?.slice(1))
+            const res = await googleOauth({ code: query.code as string })
+            if(res.data) {
+              const token = res.data.jwt
+              localStorage.setItem('jwt', token)
+              router.replace('/')
+              refetch()
+            }
+          } catch(e) {
+            console.error(e)
           }
-        } catch(e) {
-          console.error(e)
         }
+       
     
     })()
     
