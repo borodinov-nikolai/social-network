@@ -5,5 +5,13 @@
     "header": {
       "title": "Социальная сеть",
       "locale": "ru"
+    },
+    "navbar": {
+      "lent": "Лента",
+      "contacts": "Контакты",
+      "messages": "Сообщения",
+      "groups": "Группы",
+      "music": "Музыка",
+      "videos": "Видео"
     }
   }

@@ -11,11 +11,14 @@ import {
     '#':'#',
     '/': '/',
     '/blog': '/blog',
+    '/contacts': '/contacts',
+    '/account' : '/account',
+    '/feed': '/feed',
     
     '/home': {
       ru: '/dom',
       en: '/home'
-    }
+    },
 
   } satisfies Pathnames<typeof locales>;
    

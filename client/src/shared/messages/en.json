@@ -5,5 +5,13 @@
     "header": {
       "title": "Social network",
       "locale": "en"
+    },
+    "navbar": {
+      "lent": "Lent",
+      "contacts": "Contacts",
+      "messages": "Messages",
+      "groups": "Groups",
+      "music": "Music",
+      "videos": "Videos"
     }
   }

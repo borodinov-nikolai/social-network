@@ -1,0 +1,1 @@
+export {PostsLent} from './ui'

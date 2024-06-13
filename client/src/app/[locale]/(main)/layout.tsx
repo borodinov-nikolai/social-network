@@ -1,11 +1,13 @@
 import { Header } from "@/widgets/header";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import '../../shared/styles/global.scss'
+import '../../../shared/styles/global.scss'
 import ReduxToolkitProvider from "@/shared/providers/reduxToolkit";
 import { ThemeProvider } from "next-themes";
 import { getMessages } from "next-intl/server";
 import { NextIntlClientProvider } from "next-intl";
+import { Navbar } from "@/widgets/navbar";
+import { AntdRegistry } from "@ant-design/nextjs-registry";
 
 
 
@@ -28,12 +30,14 @@ export default async function RootLayout({
     <html lang={locale} suppressHydrationWarning>
       <body className={inter.className} >
         <ReduxToolkitProvider>
-          <ThemeProvider >
+          <AntdRegistry>
+          <ThemeProvider>
             <NextIntlClientProvider messages={messages} >
               <Header />
-              {children}
+              <main><div className="container template" ><div className="main__navbar"><Navbar/></div><div className="main__content" >{children}</div></div></main>
             </NextIntlClientProvider>
           </ThemeProvider>
+          </AntdRegistry>
         </ReduxToolkitProvider>
       </body>
     </html>

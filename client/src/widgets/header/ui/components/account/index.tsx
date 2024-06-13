@@ -5,6 +5,7 @@ import styles from './Account.module.scss'
 import { useSignOutMutation } from '@/entities/auth'
 import { useAppDispatch } from '@/shared/hooks/reduxToolkit'
 import { emptySplitApi } from '@/shared/configs/rtkBase'
+import { Link } from '@/navigation'
 
 
 
@@ -23,7 +24,7 @@ const Account = () => {
 
   return (
     <>
-      <div onClick={handleSignOut}  className={styles.root} ><MdAccountCircle /></div>
+      <Link href={'/account'} className={styles.root} ><MdAccountCircle /></Link> 
     </>
   )
 }

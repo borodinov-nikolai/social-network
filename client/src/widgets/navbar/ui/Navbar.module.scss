@@ -1,0 +1,27 @@
+
+
+
+.root {
+    border-right: 1px solid rgb(120, 120, 120);
+}
+
+
+.list {
+    display: flex;
+    flex-direction: column;
+
+    li {
+   
+        a {
+            cursor: pointer;
+            display: flex;
+            padding: 20px;
+            align-items: center;
+            font-size: 24px;
+            &:hover {
+                background: var(--navbar-background-hover);
+            }
+        }
+       
+    }
+}

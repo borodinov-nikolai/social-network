@@ -17,6 +17,17 @@ body {
     margin: 0 auto;
 }
 
+.template {
+    display: flex;
+}
+
+.main__navbar {
+    flex-basis: 20%;
+}
+
+.main__content {
+    flex-basis: 80%;
+}
 
 @include breakpoint(xl) {
     container {
