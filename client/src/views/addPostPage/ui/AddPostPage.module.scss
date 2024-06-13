@@ -1,0 +1,40 @@
+
+
+
+
+.root {
+    display: flex;
+    justify-content: center;
+}
+
+.inner {
+    width: 800px;
+}
+
+.title {
+    text-align: center;
+    font-size: 18px;
+}
+
+
+.form {
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+  
+}
+
+.formItem {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+
+  
+}
+
+.submitBtnHolder {
+    display: flex;
+    justify-content: flex-end;
+}

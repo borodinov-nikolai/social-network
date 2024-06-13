@@ -2,7 +2,7 @@
 
 
 .root {
-    border-right: 1px solid rgb(120, 120, 120);
+    padding-top: 10px;
 }
 
 
@@ -15,9 +15,10 @@
         a {
             cursor: pointer;
             display: flex;
-            padding: 20px;
+            padding: 10px 20px;
             align-items: center;
             font-size: 24px;
+            border-radius: 10px;
             &:hover {
                 background: var(--navbar-background-hover);
             }

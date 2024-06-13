@@ -3,11 +3,16 @@
 
 
 .root {
-    padding-top: 50px;
+    
 }
 
 
 .inner {
     display: flex;
     justify-content: center;
+}
+
+.shareBtnHolder {
+   display: flex;
+   justify-content: flex-end;
 }

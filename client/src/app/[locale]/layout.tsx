@@ -1,7 +1,7 @@
 import { Header } from "@/widgets/header";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import '../../../shared/styles/global.scss'
+import '../../shared/styles/global.scss'
 import ReduxToolkitProvider from "@/shared/providers/reduxToolkit";
 import { ThemeProvider } from "next-themes";
 import { getMessages } from "next-intl/server";
