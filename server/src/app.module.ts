@@ -10,6 +10,7 @@ import { FileModule } from './file/file.module';
 import { MulterModule } from '@nestjs/platform-express';
 import { join } from 'path';
 import { PostsModule } from './posts/posts.module';
+import { multerConfig } from 'configs/multer.config';
 
 
 @Module({
@@ -20,9 +21,7 @@ import { PostsModule } from './posts/posts.module';
     global: true,
     secret: process.env.JWT_SECRET
   }),
-  MulterModule.register({
-    dest: join(process.cwd(), 'filed', 'uploads', 'images')
-  }),
+    MulterModule,
     DbModule,
     AuthModule,
     UsersModule,

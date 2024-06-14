@@ -1,24 +1,41 @@
 'use client'
-import React from 'react'
+import React, { useState } from 'react'
 import styles from './AddPostPage.module.scss'
-import { Controller, useForm } from 'react-hook-form'
+import { Controller, SubmitHandler, useForm } from 'react-hook-form'
 import { Button, Input, Upload } from 'antd'
 import TextArea from 'antd/es/input/TextArea'
+import { IAddPostDto, useAddPostMutation } from '@/entities/post'
+import { useRouter } from '@/navigation'
+
 
 
 export const AddPostPage = () => {
-  const {control, watch} = useForm({
+  const router = useRouter()
+  const [file, setFile] = useState<any[]>([])
+  const {control, handleSubmit} = useForm({
     defaultValues: {
       title: '',
-      image: {},
+      image:{} as FileList,
       text: ''
     }
   })
+  const [addPost] = useAddPostMutation()
+  
+
+  const onSubmit: SubmitHandler<IAddPostDto> = async (data) => {
+    const {title, text, image} = data
+    let formData = new FormData()
+    formData.append('title', title)
+    formData.append('text', text)
+    formData.append('image', file[0].originFileObj)
+    addPost(formData)
+    router.push('/feed')
+  }
   return (
     <div className={styles.root} >
     <div className={styles.inner} >
       <h1 className={styles.title} >Чем хотите поделиться?</h1>
-      <form className={styles.form} action="">
+      <form onSubmit={handleSubmit(onSubmit)} className={styles.form} action="">
         <div className={styles.formItem} >
           <label htmlFor="">Заголовок</label>
           <Controller
@@ -35,7 +52,7 @@ export const AddPostPage = () => {
           name={'image'}
           control={control}
           render={({field})=>
-          <Upload {...field}>
+          <Upload onChange={(e)=> setFile(e.fileList)}>
             <Button>Загрузить</Button>
           </Upload>
           }
@@ -51,7 +68,7 @@ export const AddPostPage = () => {
           }
           />
         </div>
-        <div className={styles.submitBtnHolder} > <Button type='primary' >Опубликовать</Button> </div>
+        <div className={styles.submitBtnHolder} > <Button htmlType='submit' type='primary' >Опубликовать</Button> </div>
       </form>
     </div>
     </div>
