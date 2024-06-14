@@ -6,10 +6,12 @@ import { Button, Input, Upload } from 'antd'
 import TextArea from 'antd/es/input/TextArea'
 import { IAddPostDto, useAddPostMutation } from '@/entities/post'
 import { useRouter } from '@/navigation'
+import { useGetMeQuery } from '@/entities/user'
 
 
 
 export const AddPostPage = () => {
+  const {data: user} = useGetMeQuery()
   const router = useRouter()
   const [file, setFile] = useState<any[]>([])
   const {control, handleSubmit} = useForm({
@@ -25,6 +27,7 @@ export const AddPostPage = () => {
   const onSubmit: SubmitHandler<IAddPostDto> = async (data) => {
     const {title, text, image} = data
     let formData = new FormData()
+    formData.append('userId', String(user?.id))
     formData.append('title', title)
     formData.append('text', text)
     formData.append('image', file[0].originFileObj)

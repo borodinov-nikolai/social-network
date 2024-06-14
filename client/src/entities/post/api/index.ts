@@ -6,9 +6,12 @@ import { IPost } from "../interfaces/post";
 
 const extendedApi = emptySplitApi.injectEndpoints({
     endpoints: (build)=> ({
+        getAllPosts: build.query<IPost[], void>({
+            query: ()=> '/posts'
+        }),
         addPost: build.mutation<IPost, FormData>({
             query: (body)=> ({
-                url: "/posts",
+                url: '/posts',
                 method: 'POST',
                 body,
             })
@@ -17,4 +20,4 @@ const extendedApi = emptySplitApi.injectEndpoints({
     overrideExisting: false
 })
 
-export const {useAddPostMutation} = extendedApi
+export const {useAddPostMutation, useGetAllPostsQuery} = extendedApi

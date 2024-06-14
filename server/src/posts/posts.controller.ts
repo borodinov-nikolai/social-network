@@ -1,9 +1,9 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UploadedFile } from '@nestjs/common';
 import { PostsService } from './posts.service';
-import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
-import { FileInterceptor, NoFilesInterceptor } from '@nestjs/platform-express';
+import { FileInterceptor } from '@nestjs/platform-express';
 import { multerConfig } from 'configs/multer.config';
+import { Post as UserPost } from './entities/post.entity';
 
 @Controller('posts')
 export class PostsController {
@@ -13,12 +13,12 @@ export class PostsController {
   @UseInterceptors(FileInterceptor('image', multerConfig))
   create(@UploadedFile() file: Express.Multer.File, @Body() body) {
     const image = file.filename
-    const {title, text} = body
-    return this.postsService.create(null);
+    const {userId, title, text} = body
+    return this.postsService.create({image, title, text, userId: Number(userId)});
   }
 
   @Get()
-  findAll() {
+  findAll(): Promise<UserPost[]> {
     return this.postsService.findAll();
   }
 

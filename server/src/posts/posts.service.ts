@@ -7,13 +7,28 @@ import { DbService } from 'src/db/db.service';
 export class PostsService {
   constructor(private readonly db: DbService){}
 
-  create(createPostDto: CreatePostDto) {
-    
-    return 'This action adds a new post';
+  async create(data: CreatePostDto) {
+    const date = new Date()
+      await this.db.post.create({
+       data: {
+        ...data,
+        date
+       }
+      })
+    return null
   }
 
-  findAll() {
-    return `This action returns all posts`;
+  async findAll() {
+    return await this.db.post.findMany({
+      include: {
+        user: {
+          select: {
+            id: true,
+            login: true
+          }
+        }
+      }
+    })
   }
 
   findOne(id: number) {
