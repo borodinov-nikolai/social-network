@@ -3,7 +3,7 @@
 
 
 .root {
-    
+    width: 100%;
 }
 
 
@@ -15,4 +15,43 @@
 .shareBtnHolder {
    display: flex;
    justify-content: flex-end;
+}
+.postsList {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.post {
+    width: 580px;
+    padding: 20px;
+    border-radius: 5px;
+    border: 1px solid rgb(89, 89, 89);
+    background: var(--header-background);
+}
+
+.imageHolder {
+        margin-top: 10px;
+        height: 200px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+    image {
+        height: 100% !important;
+        width: auto;
+    }
+}
+
+.text {
+    font-size: 16px;
+    line-height: 20px;
+    margin-top: 10px;
+}
+
+.post_footer {
+    margin-top: 20px;
+   display: flex;
+   justify-content: space-between;
 }

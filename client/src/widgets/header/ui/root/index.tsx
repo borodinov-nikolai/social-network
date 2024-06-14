@@ -33,10 +33,9 @@ export const Header = () => {
                         </ul>
                     </nav>
                     <div className={styles.icons} >
-                        {user && <p>{user.login}</p>}
-                        {!isLoading && <div className={styles.account} >{user ? <Account /> : <Authorization />}</div>}
-                        <ThemeSwitch />
                         <LocaleSwitch/>
+                        <ThemeSwitch />
+                        {!isLoading && <div className={styles.account} >{user ? <Account /> : <Authorization />}</div>}
                     </div>
                 </div>
             </div>
