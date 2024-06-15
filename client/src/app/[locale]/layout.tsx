@@ -26,6 +26,7 @@ export default async function RootLayout({
   params: { locale: string };
 }) {
   const messages = await getMessages();
+  console.log(messages)
   return (
     <html lang={locale} suppressHydrationWarning>
       <body className={inter.className} >
