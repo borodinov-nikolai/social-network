@@ -19,10 +19,12 @@
 
 .form {
     margin-top: 40px;
+    padding: 20px 40px;
     display: flex;
     flex-direction: column;
     gap: 40px;
-  
+    background: var(--secondary-background-color);
+    border-radius: 10px;
 }
 
 .formItem {

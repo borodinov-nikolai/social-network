@@ -2,6 +2,7 @@
 
 
 .root {
+    position: relative;
     cursor: pointer;
     svg {
        width: 35px;
@@ -29,4 +30,22 @@
 .submitBtn {
     margin-top: 10px;
     align-self: flex-end;
+}
+
+.dropdown {
+    position: absolute;
+    padding: 20px;
+    display: flex;
+    width: 280px;
+    height: 500px;
+    background: var(--secondary-background-color);
+    top: 49px;
+    right: 0;
+    z-index: 10000;
+    border-radius: 0 0 10px 10px;
+}
+
+.signOutBtn {
+    align-self: flex-end;
+    margin: 0 auto;
 }
