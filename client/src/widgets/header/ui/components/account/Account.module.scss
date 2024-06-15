@@ -34,8 +34,9 @@
 
 .dropdown {
     position: absolute;
-    padding: 20px;
+    padding: 40px;
     display: flex;
+    flex-direction: column;
     width: 280px;
     height: 500px;
     background: var(--secondary-background-color);
@@ -45,7 +46,10 @@
     border-radius: 0 0 10px 10px;
 }
 
+.settingsLink{
+
+}
 .signOutBtn {
-    align-self: flex-end;
-    margin: 0 auto;
+    align-self: center;
+    margin-top: 180%;
 }

@@ -1,6 +1,6 @@
 import React, { ReactElement, ReactNode } from 'react';
 import { render, RenderOptions } from '@testing-library/react';
-import ReduxToolkitProvider from '../providers/reduxToolkit';
+import ReduxToolkitProvider from '../../providers/reduxToolkit';
 import { AntdRegistry } from '@ant-design/nextjs-registry';
 import { ThemeProvider } from 'next-themes';
 import { NextIntlClientProvider } from 'next-intl';

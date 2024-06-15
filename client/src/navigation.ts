@@ -25,3 +25,10 @@ import {
    
   export const {Link, redirect, usePathname, useRouter, getPathname} =
     createLocalizedPathnamesNavigation({locales, localePrefix, pathnames});
+
+    export type ReturnTypeUseRouter = {
+      push: (href: string, options?: any) => void;
+      replace: (href: string, options?: any) => void;
+      refresh: () => void;
+      // Другие свойства, если они используются
+    };

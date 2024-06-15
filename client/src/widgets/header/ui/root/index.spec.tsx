@@ -1,16 +1,19 @@
 import React from 'react';
 import { Header } from "."
-import { NextIntlClientProvider } from 'next-intl';
-import ReduxToolkitProvider from '@/shared/providers/reduxToolkit';
-import { render, screen } from '@/shared/utils/test-utils';
-import * as nextRouter from 'next/router';
+import { render, screen } from '@/shared/testing/utils/test-utils';
+import { mockedUseRouter } from '../../../../../jest.setup';
 
 
 
 
 describe('header', ()=> {
- 
-
+    beforeEach(() => {
+        mockedUseRouter({
+          push: jest.fn(),
+          replace: jest.fn(),
+          refresh: jest.fn(),
+        });
+      });
     test('test',  ()=> {
          render(<Header/>, undefined)
          

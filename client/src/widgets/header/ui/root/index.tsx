@@ -6,6 +6,8 @@ import { Link} from '@/navigation'
 import LocaleSwitch from '../components/localeSwitch'
 import ThemeSwitch from '../components/themeSwitch'
 import { useGetMeQuery } from '@/entities/user'
+import Account from '../components/account'
+import { Authorization } from '@/widgets/authorization'
 
 
 
@@ -31,7 +33,7 @@ export const Header = () => {
                     <div className={styles.icons} >
                         <LocaleSwitch/>
                         <ThemeSwitch />
-                        {/* {!isLoading && <div className={styles.account} >{user ? <Account /> : <Authorization />}</div>} */}
+                        {!isLoading && <div className={styles.account} >{user ? <Account /> : <Authorization />}</div>}
                     </div>
                 </div>
             </div>

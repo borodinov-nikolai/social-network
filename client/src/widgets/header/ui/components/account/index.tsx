@@ -31,7 +31,7 @@ const Account = () => {
         <MdAccountCircle />
       </div>
       {showDropdown && <div className={styles.dropdown} >
-        
+          <Link className={styles.settingsLink} href={'/account'} >Настройки</Link>
         <Button className={styles.signOutBtn} onClick={handleSignOut} >Выйти из аккаунта</Button>
         </div>}
       </div> 
