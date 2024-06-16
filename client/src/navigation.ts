@@ -15,6 +15,7 @@ import {
     '/account' : '/account',
     '/feed': '/feed',
     'feed/add-post': 'feed/add-post',
+    '/settings': '/settings',
     
     '/home': {
       ru: '/dom',
