@@ -9,6 +9,6 @@ export class AccountController {
 
   @Post()
   setAccount(@Body()body) {
-        
+        this.accountService.setAccount(body)
   }
 }

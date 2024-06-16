@@ -1,10 +1,12 @@
-import { Body, Controller, Get, Post, Query, Req, Res} from '@nestjs/common';
+import { Body, Controller, Get, Post, Query, Req, Res, UploadedFile, UseInterceptors} from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { SignUpDto } from './dtos/signUp.dto';
-import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { User } from 'src/users/entities/user.entity';
 import { Request, Response } from 'express';
 import { SignInDto } from './dtos/signIn.dto';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { multerConfig } from 'configs/multer.config';
 
 
 
@@ -105,6 +107,23 @@ export class AuthController {
     description: 'Успешно', 
     type: User
   })
+  @Post('/me')
+  @UseInterceptors(FileInterceptor('avatar', multerConfig))
+  async updateMe(@UploadedFile() file, @Req() req: Request, @Body() body){  
+       const token = req.headers['authorization']?.split(' ')[1]
+       const {login, email} = body
+       const avatar = file && file.filename
+       return await this.authService.updateMe(token, {login, email, avatar: avatar? avatar: null})
+  }
+
+
+  @ApiOperation({summary: 'Авторизация через Google'})
+  @ApiResponse({
+    status: 201,
+    description: 'Успешно', 
+    type: User
+  })
+
 
   @Post('/google')
 

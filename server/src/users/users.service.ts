@@ -12,6 +12,16 @@ constructor (private readonly db: DbService){}
     })
       return user
   }
+
+  update = async ({userId, data})=> {
+    await this.db.user.update({
+      where:{
+        id: userId
+      },
+       data
+    })
+  }
+  
 }
 
 

@@ -129,6 +129,30 @@ export class AuthService {
       }
    }
 
+   updateMe = async (token: string | undefined, data)=> {
+      if (!token) {
+         throw new ForbiddenException()
+      }
+
+      const payload: { id: number } | undefined = await this.tokenService.decodeToken(token)
+      if (!payload) {
+         throw new ForbiddenException()
+      }
+
+      try {
+         await this.db.user.update({
+            where: {
+               id: payload.id,
+            }, 
+            data
+         })
+
+      } catch(e){
+         console.error(e)
+         throw new ForbiddenException()
+      }
+   }
+
 
    google = async (code: string)=> {
       const url = 'https://oauth2.googleapis.com/token';

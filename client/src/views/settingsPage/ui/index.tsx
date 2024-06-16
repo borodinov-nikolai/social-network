@@ -1,33 +1,59 @@
 'use client'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState} from 'react'
 import styles from './SettingsPage.module.scss'
 import { Controller,SubmitHandler, useForm } from 'react-hook-form'
 import { Button, Input, Upload } from 'antd'
-import { useGetMeQuery } from '@/entities/user'
+import { IUserUpdateDto, useGetMeQuery, useUpdateMeMutation } from '@/entities/user'
+import { imageUrl } from '@/entities/image'
+
 
 
 export const SettingsPage = () => {
+  const [fileList, setFileList] = useState<any | undefined>()
   const {data: user} = useGetMeQuery()
+  const [updateMe, {isLoading}] = useUpdateMeMutation()
   const {control, handleSubmit, setValue, watch} = useForm({
     defaultValues: {
       login: '',
       email: '',
-      avatar: {}
+      avatar: {} as Blob
     }
   })
 
-  const {login, email} = user || {}
+  const {login, email, avatar} = user || {}
   
   useEffect(()=> {
       login && setValue('login', login)
       email && setValue('email', email)
   }, [login, email])
 
-  const onSubmit: SubmitHandler<any> = (data)=> {
+  useEffect(()=> {
+      avatar && setFileList([
+        {
+          uid: '1',
+          name: 'preview',
+          status: 'done',
+          url: imageUrl + avatar,
+        }
+      ])
+  }, [avatar])
+
+
+
+
+
+
+  const onSubmit: SubmitHandler<IUserUpdateDto> = (data)=> {
+    const {login, email, avatar} = data
+    const formData = new FormData
+    login && formData.append('login', login)
+    email && formData.append('email', email)
+    avatar && formData.append('avatar', avatar)
+    updateMe(formData)
 
   }
 
-  console.log(watch('avatar'))
+
 
   return (
     <div className={styles.root} >
@@ -55,13 +81,15 @@ export const SettingsPage = () => {
            />
         </div>
 
-        <div className={styles.formItem} >
+      <div className={styles.formItem} >
           <label htmlFor="">Аватар</label>
            <Controller
            name='avatar'
            control={control}
            render={({field})=> 
-          <Upload listType="picture-card" maxCount={1} onChange={(e)=>field.onChange(e.file.originFileObj)} > Выбрать файл </Upload>
+          <Upload 
+            fileList={fileList}
+            listType="picture-card" maxCount={1} onChange={(e)=>{field.onChange(e.file.originFileObj); setFileList(e.fileList)}} > Выбрать файл </Upload>
           }
            />
         </div>

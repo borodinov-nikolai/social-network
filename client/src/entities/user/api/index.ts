@@ -10,10 +10,19 @@ const extendedApi = emptySplitApi.injectEndpoints({
         getMe: build.query<IUser, void>({
             query: ()=> '/auth/me',
             providesTags: ['User']
+        }),
+        updateMe: build.mutation<null, FormData>({
+            query: (body)=> ({
+                url: '/auth/me',
+                method: 'POST',
+                body
+            }),
+            invalidatesTags: ['User']
         })
     }),
+      
     overrideExisting: false
 })
 
 
-export const {useGetMeQuery} = extendedApi
+export const {useGetMeQuery, useUpdateMeMutation} = extendedApi
