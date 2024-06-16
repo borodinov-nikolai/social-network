@@ -8,6 +8,7 @@ import { getMessages } from "next-intl/server";
 import { NextIntlClientProvider } from "next-intl";
 import { Navbar } from "@/widgets/navbar";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
+import { ConfigProvider } from "antd";
 
 
 
@@ -31,12 +32,14 @@ export default async function RootLayout({
       <body className={inter.className} >
         <ReduxToolkitProvider>
           <AntdRegistry>
+            <ConfigProvider >
           <ThemeProvider>
             <NextIntlClientProvider messages={messages} >
               <Header />
               <main><div className="container template" ><div className="main__navbar"><Navbar/></div><div className="main__content" >{children}</div></div></main>
             </NextIntlClientProvider>
           </ThemeProvider>
+          </ConfigProvider>
           </AntdRegistry>
         </ReduxToolkitProvider>
       </body>

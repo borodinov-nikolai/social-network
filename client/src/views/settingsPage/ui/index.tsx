@@ -1,7 +1,7 @@
 'use client'
 import React, { useEffect } from 'react'
 import styles from './SettingsPage.module.scss'
-import { Controller, set, SubmitHandler, useForm } from 'react-hook-form'
+import { Controller,SubmitHandler, useForm } from 'react-hook-form'
 import { Button, Input, Upload } from 'antd'
 import { useGetMeQuery } from '@/entities/user'
 
@@ -12,7 +12,7 @@ export const SettingsPage = () => {
     defaultValues: {
       login: '',
       email: '',
-      image: {}
+      avatar: {}
     }
   })
 
@@ -27,12 +27,12 @@ export const SettingsPage = () => {
 
   }
 
-  console.log(watch('image'))
+  console.log(watch('avatar'))
 
   return (
-    <div>
-      <h1>Изменить личные данные</h1>
-       <form onSubmit={handleSubmit(onSubmit)}>
+    <div className={styles.root} >
+      <h1 className={styles.title} >Изменить личные данные</h1>
+       <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
         <div className={styles.formItem} >
           <label htmlFor="">Логин</label>
            <Controller
@@ -58,13 +58,15 @@ export const SettingsPage = () => {
         <div className={styles.formItem} >
           <label htmlFor="">Аватар</label>
            <Controller
-           name='image'
+           name='avatar'
            control={control}
            render={({field})=> 
-          <Upload onChange={(e)=>field.onChange(e.file.originFileObj)} > <Button>Загрузить аватар</Button> </Upload>
+          <Upload listType="picture-card" maxCount={1} onChange={(e)=>field.onChange(e.file.originFileObj)} > Выбрать файл </Upload>
           }
            />
         </div>
+
+        <div className={styles.submitBtnHolder} > <Button htmlType='submit'  type='primary' >Сохранить</Button>  </div>
 
        </form>
     </div>

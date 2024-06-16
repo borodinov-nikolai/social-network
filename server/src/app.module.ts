@@ -13,6 +13,7 @@ import { PostsModule } from './posts/posts.module';
 import { multerConfig } from 'configs/multer.config';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { staticConfig } from 'configs/static.config';
+import { AccountModule } from './account/account.module';
 
 
 @Module({
@@ -30,7 +31,8 @@ import { staticConfig } from 'configs/static.config';
     AuthModule,
     UsersModule,
     FileModule,
-    PostsModule
+    PostsModule,
+    AccountModule
   ],
   controllers: [AppController],
   providers: [AppService],

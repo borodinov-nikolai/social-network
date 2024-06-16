@@ -55,8 +55,8 @@ export const AddPostPage = () => {
           name={'image'}
           control={control}
           render={({field})=>
-          <Upload onChange={(e)=> setFile(e.fileList)}>
-            <Button>Загрузить</Button>
+          <Upload listType="picture-card" maxCount={1} onChange={(e)=> setFile(e.fileList)}>
+            Выбрать файл
           </Upload>
           }
           />

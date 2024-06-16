@@ -1,0 +1,32 @@
+
+
+
+
+.root {
+    
+}
+
+.title {
+    font-size: 24px;
+}
+
+.form {
+    padding: 20px 40px;
+    border-radius: 10px;
+    background: var(--secondary-background-color);
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.formItem {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.submitBtnHolder {
+    display: flex;
+    justify-content: flex-end;
+}

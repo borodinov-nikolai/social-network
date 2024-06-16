@@ -2,7 +2,7 @@
 @import '../styles/mixins/breakpoints';
 @import '../styles/variables/_light_theme';
 @import '../styles/variables/_dark_theme';
-
+@import '../styles//ant-design.scss';
 
 
 
@@ -35,3 +35,4 @@ body {
         padding: 0;
     }
 }
+
