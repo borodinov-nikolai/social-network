@@ -45,11 +45,15 @@ export class AuthService {
       if (passwordCheck) {
          const { id, login, role } = user
          const tokens = await this.tokenService.createTokens({ id, login, role })
-         await this.db.refreshToken.update({
+         await this.db.refreshToken.upsert({
             where: {
                userId: id
             },
-            data: {
+            update: {
+               token: tokens.refreshToken
+            },
+            create: {
+               userId: id,
                token: tokens.refreshToken
             }
          })

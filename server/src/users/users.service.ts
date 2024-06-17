@@ -6,6 +6,12 @@ import { DbService } from 'src/db/db.service';
 export class UsersService {
 constructor (private readonly db: DbService){}
 
+
+   findAll = async ()=> {
+    const users = await this.db.user.findMany()
+    return users
+   }
+
    create = async (data: SignUpDto)=> {
     const user = await this.db.user.create({
         data

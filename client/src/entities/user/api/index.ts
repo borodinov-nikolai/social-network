@@ -9,7 +9,7 @@ const extendedApi = emptySplitApi.injectEndpoints({
     endpoints: (build)=>({
         getMe: build.query<IUser, void>({
             query: ()=> '/auth/me',
-            providesTags: ['User']
+            providesTags: ['Me']
         }),
         updateMe: build.mutation<null, FormData>({
             query: (body)=> ({
@@ -17,7 +17,11 @@ const extendedApi = emptySplitApi.injectEndpoints({
                 method: 'POST',
                 body
             }),
-            invalidatesTags: ['User']
+            invalidatesTags: ['Me']
+        }),
+        getAllUsers: build.query<IUser[], void>({
+            query: ()=> '/users',
+            providesTags: ['User']
         })
     }),
       
@@ -25,4 +29,4 @@ const extendedApi = emptySplitApi.injectEndpoints({
 })
 
 
-export const {useGetMeQuery, useUpdateMeMutation} = extendedApi
+export const {useGetMeQuery, useUpdateMeMutation, useGetAllUsersQuery} = extendedApi

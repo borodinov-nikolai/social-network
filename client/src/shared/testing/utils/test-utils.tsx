@@ -10,7 +10,7 @@ import { NextIntlClientProvider } from 'next-intl';
 
 
 const locale = 'ru'
-const messages = require(`../../shared/messages/${locale}.json`)
+const messages = require(`../../messages/${locale}.json`)
 
 
 

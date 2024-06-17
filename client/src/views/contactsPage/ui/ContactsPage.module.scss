@@ -18,3 +18,45 @@
         width: 200px;
     }
 }
+
+.imageHolder {
+    img {
+        height: 100px;
+        width: auto;
+    }
+}
+
+.avatar {
+    
+    svg {
+        width: 100%;
+        height: auto;
+    }
+}
+
+.usersList {
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.userCard {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    font-size: 18px;
+    background: var(--secondary-background-color);
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.addContact {
+    cursor: pointer;
+    margin-left: auto;
+    svg {
+        width: 28px;
+        height: auto;
+        stroke: var(--font-color);
+    }
+}

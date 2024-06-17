@@ -6,13 +6,16 @@ import { useSignOutMutation } from '@/entities/auth'
 import { useAppDispatch } from '@/shared/hooks/reduxToolkit'
 import { emptySplitApi } from '@/shared/configs/rtkBase'
 import { Link } from '@/navigation'
-import { Button } from 'antd'
+import { Avatar, Button } from 'antd'
+import { useGetMeQuery } from '@/entities/user'
+import { imageUrl } from '@/entities/image'
 
 
 
 
 
 const Account = () => {
+  const {data: user} = useGetMeQuery()
   const [showDropdown, setShowDropdown] = useState<boolean>(false)
   const dispatch = useAppDispatch()
     const [signOut] = useSignOutMutation()
@@ -28,7 +31,8 @@ const Account = () => {
     <>
       <div className={styles.root} >
         <div onClick={ ()=>setShowDropdown(!showDropdown) } >
-        <MdAccountCircle />
+        <Avatar src={imageUrl + user?.avatar} size={35} icon={<MdAccountCircle />} />
+        
       </div>
       {showDropdown && <div className={styles.dropdown} >
           <Link onClick={()=> setShowDropdown(false)} className={styles.settingsLink} href='/settings' >Настройки</Link>
