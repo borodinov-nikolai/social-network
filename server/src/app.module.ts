@@ -14,6 +14,7 @@ import { multerConfig } from 'configs/multer.config';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { staticConfig } from 'configs/static.config';
 import { AccountModule } from './account/account.module';
+import { ChatModule } from './chat/chat.module';
 
 
 @Module({
@@ -32,7 +33,8 @@ import { AccountModule } from './account/account.module';
     UsersModule,
     FileModule,
     PostsModule,
-    AccountModule
+    AccountModule,
+    ChatModule
   ],
   controllers: [AppController],
   providers: [AppService],

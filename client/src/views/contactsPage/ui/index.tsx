@@ -8,6 +8,7 @@ import { MdAccountCircle, MdOutlineMessage } from 'react-icons/md'
 import { IoPersonAddOutline } from 'react-icons/io5'
 import { useAddContactMutation } from '@/entities/contact'
 import { useClickOutside } from '@/shared/hooks/useClickOutside'
+import { Link } from '@/navigation'
 
 
 
@@ -60,7 +61,9 @@ export const ContactsPage = () => {
                  <Avatar src={imageUrl + avatar} className={styles.avatar} size={50} icon={<MdAccountCircle/>} />
                 <p>{login}</p>
                 <div className={styles.addContact} >
-                  <MdOutlineMessage />
+                  <Link href={{pathname: '/contacts/chat/[id]', params: {id: id}}}>
+                    <MdOutlineMessage />
+                  </Link>
                 </div>
                 </li>
             })

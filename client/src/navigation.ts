@@ -16,6 +16,7 @@ import {
     '/feed': '/feed',
     'feed/add-post': 'feed/add-post',
     '/settings': '/settings',
+    '/contacts/chat/[id]': '/contacts/chat/[id]',
     
     '/home': {
       ru: '/dom',
@@ -31,5 +32,4 @@ import {
       push: (href: string, options?: any) => void;
       replace: (href: string, options?: any) => void;
       refresh: () => void;
-      // Другие свойства, если они используются
     };
