@@ -120,6 +120,14 @@ export class AuthService {
          const user = await this.db.user.findUnique({
             where: {
                id: payload?.id
+            }, 
+            include: {
+               contacts: {
+                  include: {
+                     contact: true
+                  }
+               }
+
             }
          })
          if (!user) {

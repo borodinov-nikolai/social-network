@@ -7,8 +7,16 @@ export class UsersService {
 constructor (private readonly db: DbService){}
 
 
-   findAll = async ()=> {
-    const users = await this.db.user.findMany()
+   findAll = async (param: any)=> {
+    const {search} = param || {}
+    const users = await this.db.user.findMany({
+      where: {
+        login: {
+          contains: search,
+          mode: 'insensitive'
+        }
+      }
+    })
     return users
    }
 

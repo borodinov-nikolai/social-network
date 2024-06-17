@@ -1,3 +1,4 @@
 export type {IAddPostDto} from './interfaces/dtos'
 export type {IPost} from './interfaces/post'
-export {useAddPostMutation, useGetAllPostsQuery} from './api'
+export {useAddPostMutation} from './api/client'
+export {getPosts} from './api/server'

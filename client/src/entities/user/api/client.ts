@@ -19,8 +19,13 @@ const extendedApi = emptySplitApi.injectEndpoints({
             }),
             invalidatesTags: ['Me']
         }),
-        getAllUsers: build.query<IUser[], void>({
-            query: ()=> '/users',
+        getAllUsers: build.query<IUser[], {search: string}>({
+            query: ({search})=> ({
+                url: '/users',
+                params: {
+                    search
+                }
+            }),
             providesTags: ['User']
         })
     }),

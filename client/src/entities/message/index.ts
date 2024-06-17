@@ -1,1 +1,1 @@
-export {useGetMessageQuery} from './api'
+export {useGetMessageQuery} from './api/client'

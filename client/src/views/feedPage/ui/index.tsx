@@ -1,16 +1,15 @@
-'use client'
 import React from 'react'
 import styles from './FeedPage.module.scss'
 import { Button } from 'antd'
 import { Link } from '@/navigation'
-import { useGetAllPostsQuery } from '@/entities/post'
 import Image from 'next/image'
 import { imageUrl } from '@/entities/image'
+import { getPosts } from '@/entities/post'
 
 
 
-export const FeedPage = () => {
-  const {data: posts} = useGetAllPostsQuery()
+export const FeedPage = async () => {
+  const posts = await getPosts()
  
   return (
     <div className={styles.root} >

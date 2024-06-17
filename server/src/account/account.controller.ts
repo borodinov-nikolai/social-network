@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Post, Req } from '@nestjs/common';
 import { AccountService } from './account.service';
 import { ApiTags } from '@nestjs/swagger';
 
@@ -7,8 +7,9 @@ import { ApiTags } from '@nestjs/swagger';
 export class AccountController {
   constructor(private readonly accountService: AccountService) {}
 
-  @Post()
-  setAccount(@Body()body) {
-        this.accountService.setAccount(body)
+  @Post('add-contact')
+  addContact(@Req() req: Request, @Body()body) {
+        const token = req.headers['authorization']?.split(' ')[1]
+        this.accountService.addContact(token, Number(body.contactId))
   }
 }
