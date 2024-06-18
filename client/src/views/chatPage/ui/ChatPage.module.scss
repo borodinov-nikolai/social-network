@@ -1,0 +1,23 @@
+
+
+
+.title {
+    font-size: 24px;
+    text-align: center;
+}
+
+.messagesHolder {
+    height: 75vh;
+}
+
+
+.inputHolder {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    svg {
+        width: 35px;
+        height: auto;
+    }
+}
