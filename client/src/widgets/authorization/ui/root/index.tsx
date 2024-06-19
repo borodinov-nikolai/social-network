@@ -47,7 +47,7 @@ export const Authorization = () => {
 
   return (
     <>
-      <div onClick={() => setIsOpen(true)} className={styles.root} ><PiSignIn /></div>
+      <div data-cy="open-auth-modal" onClick={() => setIsOpen(true)} className={styles.root} ><PiSignIn /></div>
 
       <Modal footer={false} className={styles.modal} title={isSignUp ? 'Регистрация' : 'Авторизация'} open={isOpen} onCancel={() => setIsOpen(false)} >
         {!isSignUp && <SignInForm handleSubmit={handleSubmit} control={control} onSubmit={onSubmit} />}

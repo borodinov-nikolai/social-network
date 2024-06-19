@@ -14,7 +14,7 @@ export const FeedPage = async () => {
   return (
     <div className={styles.root} >
         <div className='container' >
-          <div className={styles.shareBtnHolder} ><Link href={'feed/add-post'} ><Button type='primary' >Поделится</Button></Link></div>
+          <div className={styles.shareBtnHolder} ><Link href={'feed/add-post'} ><Button type='primary' >Поделиться</Button></Link></div>
           <ul className={styles.postsList} >
             {posts?.map(({id, title, text, user, image, date})=>{
               const splitedDate = date.split('T')

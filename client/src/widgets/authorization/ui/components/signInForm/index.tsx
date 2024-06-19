@@ -47,7 +47,7 @@ const SignInForm: FC<IProps> = ({handleSubmit, onSubmit, control}) => {
                     }
                     />
                   </div>
-                <Button onClick={handleSubmit(onSubmit)} className={styles.submitBtn} type='primary' >Отправить</Button>
+                <Button id="signInBtn" onClick={handleSubmit(onSubmit)} className={styles.submitBtn} type='primary' >Отправить</Button>
                 </form>
   )
 }

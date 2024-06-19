@@ -16,6 +16,7 @@ import {
     '/feed': '/feed',
     'feed/add-post': 'feed/add-post',
     '/settings': '/settings',
+    '/messages': '/messages',
     '/contacts/chat/[id]': '/contacts/chat/[id]',
     
     '/home': {

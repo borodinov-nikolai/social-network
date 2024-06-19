@@ -19,7 +19,7 @@ export const Navbar = () => {
             <li><Link href={'/'} >{t('lent')}</Link></li>
             <li><Link href={'/contacts'} >{t('contacts')}</Link></li>
            
-              <li> <Link href={'/'} ><Badge size='small' count={message.messages.length}>{t('messages')}</Badge></Link> </li>
+              <li> <Link href={'/messages'} ><Badge size='small' count={message.messages.length}>{t('messages')}</Badge></Link> </li>
            
             <li><Link href={'/'} >{t('groups')}</Link></li>
             <li><Link href={'/'} >{t('music')}</Link></li>
