@@ -1,10 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { emptySplitApi } from '../configs/rtkBase'
 import { setupListeners } from '@reduxjs/toolkit/query'
+import { messageSlice } from '@/entities/message'
+
 
 
 export const store = configureStore({
   reducer: {
+    message: messageSlice,
     [emptySplitApi.reducerPath]: emptySplitApi.reducer,
   },
 

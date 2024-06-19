@@ -4,11 +4,11 @@ import { TokenService } from 'src/auth/token.service';
 
 
 @WebSocketGateway({cors: true})
-export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
+export class SocketGateway implements OnGatewayConnection, OnGatewayDisconnect {
     constructor(private readonly tokenService: TokenService){}
     @WebSocketServer()
     server: Server
-    private clients: Map<string, Socket> = new Map()
+    readonly clients: Map<string, Socket> = new Map()
     async handleConnection(client: Socket) {
         try {
             const token = client.handshake.query.token
@@ -29,13 +29,6 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
         }
     }
 
-    @SubscribeMessage('message')
-    handleMessage(@MessageBody() data, @ConnectedSocket() client: Socket) {
-       
-        const targetClient = this.clients.get(data.contactId)
-        if(targetClient){
-            targetClient.emit('receiveMessage', data.message)
-        }
-    }
-}
 
+     
+}

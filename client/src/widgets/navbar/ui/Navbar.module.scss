@@ -4,6 +4,16 @@
 .root {
     height: 100%;
     padding-top: 10px;
+
+    :global {
+        .ant-badge {
+            font-size: 18px;
+        }
+        .ant-scroll-number {
+            top: 10px !important;
+            right: -20px !important;
+        }
+    }
 }
 
 

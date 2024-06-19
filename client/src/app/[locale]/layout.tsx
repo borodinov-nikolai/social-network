@@ -9,6 +9,7 @@ import { NextIntlClientProvider } from "next-intl";
 import { Navbar } from "@/widgets/navbar";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
 import { ConfigProvider } from "antd";
+import { Websocket } from "@/entities/websocket";
 
 
 
@@ -35,6 +36,7 @@ export default async function RootLayout({
             <ConfigProvider >
           <ThemeProvider>
             <NextIntlClientProvider messages={messages} >
+              <Websocket/>
               <Header />
               <main><div className="container template" ><div className="main__navbar"><Navbar/></div><div className="main__content" >{children}</div></div></main>
             </NextIntlClientProvider>
