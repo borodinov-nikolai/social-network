@@ -1,14 +1,15 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
+import { IMessage } from "../interfaces/message"
 
 
 
 
 type InitialState = {
-    messages: {from: number, message: string} []
+    messages: IMessage[]
 }
 
 const initialState: InitialState = {
-    messages:[]
+    messages: []
 }
 
 
@@ -16,11 +17,14 @@ const slice = createSlice({
     name: 'message',
     initialState,
     reducers: {
-        setMessage(state, action: PayloadAction<{from: number, message: string}>){
-          state.messages = [...state.messages, action.payload]
+        setMessages(state, action: PayloadAction<IMessage[]>){
+          state.messages = action.payload
+        },
+        addMessage(state, action: PayloadAction<IMessage>) {
+            state.messages = [...state.messages, action.payload]
         }
     }
 })
 
-export const {setMessage} = slice.actions
+export const {setMessages, addMessage} = slice.actions
 export const messageSlice = slice.reducer

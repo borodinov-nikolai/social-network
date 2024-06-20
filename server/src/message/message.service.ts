@@ -12,9 +12,19 @@ export class MessagesService {
         const {senderId, receiverId} = query
         return await this.db.message.findMany({
             where:{
-               senderId: +senderId,
-               receiverId: receiverId ? +receiverId: undefined
-            }
+                OR: [
+                    {
+                        senderId: +senderId,
+                        receiverId: receiverId ? +receiverId: undefined
+                    },
+
+                    {
+                        senderId: receiverId ? +receiverId: undefined,
+                        receiverId: +senderId
+                    }
+                ]
+            
+            } 
         })
     }
 }

@@ -29,7 +29,7 @@ export const ContactsPage = () => {
   }
 
    
- console.log(users)
+ 
 
   return (
     <div className={styles.root} >

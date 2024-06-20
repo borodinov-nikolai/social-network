@@ -13,7 +13,7 @@ export class MessageGateway implements OnGatewayInit {
     }
 
     @SubscribeMessage('message')
-    async handleMessage(@MessageBody() data, @ConnectedSocket() client: Socket) {
+    async handleMessage(@MessageBody() data) {
         const {senderId, receiverId} = data || {} 
         const clients = this.commonGateway.clients
         const targetClient = clients.get(receiverId)
@@ -23,6 +23,17 @@ export class MessageGateway implements OnGatewayInit {
         
         if(targetClient){
             targetClient.emit('receiveMessage', {senderId, message})
+        }
+    }
+
+    @SubscribeMessage('typing')
+    async handleTyping(@MessageBody() data) {
+        const {senderId, receiverId, value} = data || {} 
+        const clients = this.commonGateway.clients
+        const targetClient = clients.get(receiverId)
+       
+        if(targetClient){
+            targetClient.emit('typing', {receiverId:senderId, value})
         }
     }
 }

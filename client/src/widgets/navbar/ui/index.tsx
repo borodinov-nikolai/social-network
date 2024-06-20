@@ -12,7 +12,7 @@ export const Navbar = () => {
   const t = useTranslations('navbar')
   const message = useAppSelector(messageSelector)
   
-  console.log(message)
+
   return (
     <nav className={styles.root} >
         <ul className={styles.list}>

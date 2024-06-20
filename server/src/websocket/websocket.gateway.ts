@@ -13,7 +13,7 @@ export class SocketGateway implements OnGatewayConnection, OnGatewayDisconnect {
         try {
             const token = client.handshake.query.token
             const {id: userId} = await this.tokenService.decodeToken(token as string)
-            console.log(userId)
+    
             client.data.userId = userId
             this.clients.set(userId, client)
         } catch(e){

@@ -3,7 +3,7 @@
 
 export interface IMessage {
     id: number
-    conten: string
+    content: string
     senderId: number
     receiverId: number
     timestamp: Date
