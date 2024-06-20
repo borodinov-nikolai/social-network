@@ -1,16 +1,20 @@
 import { emptySplitApi } from "@/shared/configs/rtkBase";
+import { IMessage } from "../interfaces/message";
 
 
 
 
 const extendedApi = emptySplitApi.injectEndpoints({
     endpoints: (build)=> ({
-        getMessage: build.query<{message: string}, void>({
-            query: ()=> ''
+        getMessages: build.query<IMessage[], {senderId: number, receiverId?: number}>({
+            query: (params)=> ({
+                url: '/messages',
+                params
+            })
         })
     }),
     overrideExisting: false
 })
 
 
-export const {useGetMessageQuery} = extendedApi
+export const {useGetMessagesQuery} = extendedApi

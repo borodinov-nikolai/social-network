@@ -5,6 +5,7 @@ import useWebSocket from '@/shared/hooks/useWebsocket'
 import TextArea from 'antd/es/input/TextArea'
 import { RiMailSendLine } from 'react-icons/ri'
 import { useGetMeQuery } from '@/entities/user'
+import { useGetMessagesQuery } from '@/entities/message'
 
 
 interface IProps {
@@ -15,15 +16,16 @@ export const ChatPage: FC<IProps> = ({contactId}) => {
   const [message, setMessage] = useState<string | undefined>()
   const [receiveMessage, setReceiveMessage] = useState<{from: number, message: string} | undefined>()
   const {data: user} = useGetMeQuery()
-    const socket = useWebSocket()
-    const {id: userId} = user || {}
+  const socket = useWebSocket()
+  const {id: senderId} = user || {}
+  const {data: messages} =  useGetMessagesQuery({senderId: +senderId!, receiverId: contactId}, {skip: senderId ? false : true})
 
     const handleSend = async ()=> {
-      socket?.emit('message', {message, userId, contactId})
+      socket?.emit('message', {content: message, senderId, receiverId: contactId})
       setMessage(undefined)
     }
 
-     
+     console.log(messages)
   
 console.log(receiveMessage)
   return (
