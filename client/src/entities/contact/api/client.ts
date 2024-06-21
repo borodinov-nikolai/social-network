@@ -14,7 +14,8 @@ const extendedApi = emptySplitApi.injectEndpoints({
             invalidatesTags: ['Me']
         }),
         getContactMessagesAndCount: build.query<any, number>({
-            query: (userId)=> `/contacts/messages/${userId}`
+            query: (userId)=> `/contacts/messages/${userId}`,
+            providesTags: ['Contact', 'Message']
         })
     }),
     overrideExisting: false

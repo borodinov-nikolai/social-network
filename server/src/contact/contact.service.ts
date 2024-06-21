@@ -34,7 +34,7 @@ export class ContactService {
                     read: false
                 }
             })
-            console.log(count)
+         
             return {contact, count}
         })
     

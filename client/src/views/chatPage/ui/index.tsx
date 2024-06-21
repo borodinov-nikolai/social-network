@@ -5,9 +5,11 @@ import useWebSocket from '@/shared/hooks/useWebsocket'
 import TextArea from 'antd/es/input/TextArea'
 import { RiMailSendLine } from 'react-icons/ri'
 import { useGetMeQuery } from '@/entities/user'
-import { addMessage, messageSelector, setMessages, useGetMessagesQuery } from '@/entities/message'
+import { addMessage, messageSelector, setMessages, useGetMessagesQuery, useMakeMessageReadMutation } from '@/entities/message'
 import cs from 'classnames'
 import { useAppDispatch, useAppSelector } from '@/shared/hooks/reduxToolkit'
+import WebSocketSingleton from '@/shared/hooks/useWebsocket'
+import { Divider } from 'antd'
 
 interface IProps {
     contactId: number
@@ -20,10 +22,10 @@ export const ChatPage: FC<IProps> = ({contactId}) => {
   const [message, setMessage] = useState<string | undefined>()
   const {messages: messagesFromStore} = useAppSelector(messageSelector)
   const {data: user} = useGetMeQuery()
-  const socket = useWebSocket()
+  const socket = WebSocketSingleton.getInstance()
   const {id: senderId} = user || {}
   const {data: messages, refetch, isLoading} =  useGetMessagesQuery({senderId: +senderId!, receiverId: contactId}, {skip: senderId ? false : true})
-
+   const [makeMessagesRead] =  useMakeMessageReadMutation()
     const handleSend = async ()=> {
       socket?.emit('message', {content: message, senderId, receiverId: contactId})
       setMessage(undefined)
@@ -31,9 +33,13 @@ export const ChatPage: FC<IProps> = ({contactId}) => {
       refetch()
     }
 
+    useEffect(()=> {
+      makeMessagesRead({userId: senderId!, contactId})
+    }, [])
     
     useEffect(()=> {
       messages && dispatch(setMessages(messages))
+      makeMessagesRead({userId: senderId!, contactId})
     }, [messages])
     
     useEffect(()=> {
@@ -59,9 +65,9 @@ export const ChatPage: FC<IProps> = ({contactId}) => {
         <ul className={styles.messagesHolder} >{messagesFromStore?.map(({id, content, senderId: sender})=> {
           return <li key={id} className={cs(styles.message, styles[senderId && +senderId === sender ? 'senderMessage':'receiverMessage'])} >{content}</li>
         })}
-        <div className={styles.typingAnimation} >{receiverIsTyping && receiverTypingId === contactId ? '...': ''}</div>
+        {receiverIsTyping && receiverTypingId === contactId ?<div className={styles.typing} >печатает</div>: <div></div>}
         </ul>
-        <div className={styles.inputHolder} ><TextArea value={message} onKeyDown={()=> { setTyping(true)}} onKeyUp={()=> { setTyping(false)}} onChange={(e)=>{ setMessage(e.target.value);}} autoSize className={styles.input} /> <RiMailSendLine onClick={handleSend} /></div>
+        <div className={styles.inputHolder} ><TextArea value={message} onFocus={()=> setTyping(true)} onBlur={()=> setTyping(false)} onChange={(e)=>{ setMessage(e.target.value);}} autoSize className={styles.input} /> <RiMailSendLine onClick={handleSend} /></div>
     </div>
   )
 }

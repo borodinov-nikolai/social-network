@@ -8,7 +8,7 @@ export class ContactController {
 
   @Get('/messages/:userId')
   GetContactMessages(@Param('userId') userId:string) {
-    console.log(userId)
+    
            return this.contactService.messagesAndCount(userId)
   }
 

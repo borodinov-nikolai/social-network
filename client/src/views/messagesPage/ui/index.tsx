@@ -2,7 +2,6 @@
 import React from 'react'
 import styles from './MessagesPage.module.scss'
 import { IUser, useGetMeQuery } from '@/entities/user'
-import { useGetMessagesQuery } from '@/entities/message'
 import { imageUrl } from '@/entities/image'
 import { Avatar } from 'antd'
 import { MdAccountCircle } from 'react-icons/md'
@@ -31,7 +30,7 @@ export const MessagesPage = () => {
                   <Link href={{pathname: '/contacts/chat/[id]', params: {id: id}}}>
                  <Avatar src={imageUrl + avatar} className={styles.avatar} size={50} icon={<MdAccountCircle/>} />
                 <p>{login}</p>
-                   <p className={styles.count} >{count}</p>
+                   {count > 0 && <p className={styles.count} >{count}</p>}
                   </Link>
                 </li>
             })

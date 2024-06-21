@@ -1,26 +1,22 @@
-import { useEffect, useState } from "react";
-import { Socket, io } from "socket.io-client";
+import { Socket, io } from 'socket.io-client';
 
+class WebSocketSingleton {
+  private static instance: Socket | null = null;
 
-const useWebSocket = () => {
-  const [socket, setSocket] = useState<Socket>();
-  const url = process.env.NEXT_PUBLIC_SERVER
- 
+  private constructor() {}
 
+  public static getInstance(): Socket {
+    if (!WebSocketSingleton.instance) {
+      const url = process.env.NEXT_PUBLIC_SERVER || 'http://localhost:5000';
+      const token = typeof window !== 'undefined' && localStorage.getItem('jwt');
+      WebSocketSingleton.instance = io(url, { query: { token } });
 
-  
-  useEffect(() => {
-    const token = localStorage.getItem('jwt')
-    const newSocket = io(url || 'http://localhost:5000', {query: {token}});
-    newSocket.on('connect', ()=> console.log( 'websocket id ' + newSocket.id))
-    newSocket.on('disconnect', ()=> console.log('websocket disconect'))
-    setSocket(newSocket);
-    return () => {
-      newSocket.disconnect();
-    };
-  }, []);
-  
-  return socket;
-};
+      WebSocketSingleton.instance.on('connect', () => console.log('websocket id ' + WebSocketSingleton.instance!.id));
+      WebSocketSingleton.instance.on('disconnect', () => console.log('websocket disconnect'));
+    }
 
-export default useWebSocket;
+    return WebSocketSingleton.instance;
+  }
+}
+
+export default WebSocketSingleton;
