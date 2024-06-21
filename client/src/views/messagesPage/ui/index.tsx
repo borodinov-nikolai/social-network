@@ -14,29 +14,24 @@ import { useGetContactMessagesAndCountQuery } from '@/entities/contact'
 export const MessagesPage = () => {
   const {data: user} = useGetMeQuery()
   const senderId = user?.id
-  const {data: messages} = useGetMessagesQuery({senderId: senderId!})
-  const {data: contactsWithCount} = useGetContactMessagesAndCountQuery(senderId! , {skip: senderId ? false: true})
-  const receivers: IUser[] = []
-  messages?.map(({receiver})=> {
-    const check = receivers?.some((item)=> item?.id === receiver.id)
-    if(!check){
-        receivers.push(receiver)
-      }
-    })
+  const {data: contactsWithCount} = useGetContactMessagesAndCountQuery(user?.id!, {skip: user?.id ? false: true})
 
-    console.log(contactsWithCount)
+
+
+  
 
   return (
     <div className={styles.root} >
       <h1>Диалоги</h1>
            <ul className={styles.usersList} >
           {
-            receivers?.filter((item)=> item.id !== senderId).map(({id, login, avatar})=> {
+            (contactsWithCount as {contact: IUser, count: number}[])?.filter(({contact})=> contact.id !== senderId).map(({contact, count})=> {
+              const {id, login, avatar} = contact
               return <li className={styles.userCard} key={id} >
                   <Link href={{pathname: '/contacts/chat/[id]', params: {id: id}}}>
                  <Avatar src={imageUrl + avatar} className={styles.avatar} size={50} icon={<MdAccountCircle/>} />
                 <p>{login}</p>
-              
+                   <p className={styles.count} >{count}</p>
                   </Link>
                 </li>
             })

@@ -6,7 +6,7 @@ export class ContactService {
     constructor(private readonly db: DbService){}
 
     async messagesAndCount(userId: string) {
-        const contacts = await this.db.user.findMany({
+        const contactsWithMessages = await this.db.user.findMany({
             where: {
                 OR: [{
                     sentMessages: {
@@ -26,6 +26,19 @@ export class ContactService {
             }
         })
 
-        return contacts
+        const contactsWithCount = contactsWithMessages.map(async (contact)=> {
+            const count = await this.db.message.count({
+                where: {
+                    senderId: contact.id,
+                    receiverId: +userId,
+                    read: false
+                }
+            })
+            console.log(count)
+            return {contact, count}
+        })
+    
+        return await Promise.all(contactsWithCount)
     }
+
 }
