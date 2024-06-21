@@ -7,6 +7,7 @@ import { imageUrl } from '@/entities/image'
 import { Avatar } from 'antd'
 import { MdAccountCircle } from 'react-icons/md'
 import { Link } from '@/navigation'
+import { useGetContactMessagesAndCountQuery } from '@/entities/contact'
 
 
 
@@ -14,7 +15,7 @@ export const MessagesPage = () => {
   const {data: user} = useGetMeQuery()
   const senderId = user?.id
   const {data: messages} = useGetMessagesQuery({senderId: senderId!})
-  
+  const {data: contactsWithCount} = useGetContactMessagesAndCountQuery(senderId! , {skip: senderId ? false: true})
   const receivers: IUser[] = []
   messages?.map(({receiver})=> {
     const check = receivers?.some((item)=> item?.id === receiver.id)
@@ -22,6 +23,8 @@ export const MessagesPage = () => {
         receivers.push(receiver)
       }
     })
+
+    console.log(contactsWithCount)
 
   return (
     <div className={styles.root} >

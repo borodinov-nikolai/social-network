@@ -42,8 +42,12 @@ export const ChatPage: FC<IProps> = ({contactId}) => {
     
     
     useEffect(()=> {
-      socket?.on('typing', (data)=>{ SetReceiverTyping(data)})
-      socket?.on('receiveMessage', (data)=>{ dispatch(addMessage(data.message)); console.log(messagesFromStore)})
+      try {
+        socket?.on('typing', (data)=>{ SetReceiverTyping(data)})
+        socket?.on('receiveMessage', (data)=>{ dispatch(addMessage(data.message)); console.log(messagesFromStore)})
+      } catch(e) {
+        console.error(e)
+      }
     }, [socket])
     
     const {value: receiverIsTyping, receiverId: receiverTypingId} = receiverTyping || {}

@@ -11,10 +11,13 @@ const extendedApi = emptySplitApi.injectEndpoints({
                 url: '/messages',
                 params
             })
+        }),
+        getMessagesUnreadCount: build.query<number, number>({
+            query: (userId)=> `/messages/unread-count/${userId}` 
         })
     }),
     overrideExisting: false
 })
 
 
-export const {useGetMessagesQuery} = extendedApi
+export const {useGetMessagesQuery, useGetMessagesUnreadCountQuery} = extendedApi

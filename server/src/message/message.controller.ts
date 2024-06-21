@@ -15,4 +15,9 @@ export class MessagesController {
         return this.messagesService.findMany(query)
     }
     
+    @Get('/unread-count/:userId')
+    getUnreadMessagesCount(@Param('userId') userId: string) {
+     
+            return this.messagesService.getUnreadCount(userId)
+    }
 }

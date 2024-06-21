@@ -21,7 +21,7 @@ export const ContactsPage = () => {
   const [addContact] = useAddContactMutation()
   const ref = useClickOutside(()=>setShowSearchResult(false))
 
-  
+
   
 
   const handleInputChange = (value: string)=> {

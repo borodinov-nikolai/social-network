@@ -51,6 +51,7 @@ model Contact {
 
 model Message {
   id         Int      @id @default(autoincrement())
+  read       Boolean  @default(false)
   content    String
   timestamp  DateTime @default(now())
   senderId   Int

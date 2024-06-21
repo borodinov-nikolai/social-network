@@ -16,6 +16,7 @@ import { staticConfig } from 'configs/static.config';
 import { AccountModule } from './account/account.module';
 import { MessageModule } from './message/message.module';
 import { WebsocketModule } from './websocket/websocket.module';
+import { ContactModule } from './contact/contact.module';
 
 
 @Module({
@@ -36,7 +37,8 @@ import { WebsocketModule } from './websocket/websocket.module';
     PostsModule,
     AccountModule,
     WebsocketModule,
-    MessageModule
+    MessageModule,
+    ContactModule
   ],
   controllers: [AppController],
   providers: [AppService],

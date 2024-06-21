@@ -6,6 +6,8 @@ export class Message {
     @ApiProperty()
     id: number
     @ApiProperty()
+    read: boolean
+    @ApiProperty()
     content: string
     @ApiProperty()
     senderId: number

@@ -12,10 +12,13 @@ const extendedApi = emptySplitApi.injectEndpoints({
                 body
             }),
             invalidatesTags: ['Me']
+        }),
+        getContactMessagesAndCount: build.query<any, number>({
+            query: (userId)=> `/contacts/${userId}`
         })
     }),
     overrideExisting: false
 })
 
 
-export const {useAddContactMutation} = extendedApi
+export const {useAddContactMutation, useGetContactMessagesAndCountQuery} = extendedApi

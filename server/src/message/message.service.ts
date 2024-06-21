@@ -30,4 +30,14 @@ export class MessagesService {
             }
         })
     }
+
+    async getUnreadCount(userId: string) {
+           return await this.db.message.count({
+            where: {
+                receiverId: +userId,
+                read: false
+            },
+             
+           })
+    }
 }
