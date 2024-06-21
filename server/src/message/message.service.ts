@@ -24,7 +24,10 @@ export class MessagesService {
                     }
                 ]
             
-            } 
+            } ,
+            include: {
+                receiver: true
+            }
         })
     }
 }

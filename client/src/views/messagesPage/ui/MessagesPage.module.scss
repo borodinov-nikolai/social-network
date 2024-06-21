@@ -1,0 +1,28 @@
+
+
+
+
+
+
+.usersList {
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.userCard {
+   
+
+    a {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        gap: 18px;
+        font-size: 18px;
+        background: var(--secondary-background-color);
+        border-radius: 10px;
+        padding: 10px;
+    }
+}

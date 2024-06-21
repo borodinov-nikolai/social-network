@@ -4,7 +4,7 @@ import { IContact } from "@/entities/contact"
 
 
 export interface IUser {
-    id: string
+    id: number
     login: string
     email: string
     avatar: string

@@ -1,3 +1,4 @@
+import { IUser } from "@/entities/user"
 
 
 
@@ -7,4 +8,5 @@ export interface IMessage {
     senderId: number
     receiverId: number
     timestamp: Date
+    receiver: IUser
 }
