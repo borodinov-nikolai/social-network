@@ -1,15 +1,14 @@
 'use client'
-import React, { FC, useEffect, useState } from 'react'
+import React, { FC, useEffect, useRef, useState } from 'react'
 import styles from './ChatPage.module.scss'
-import useWebSocket from '@/shared/hooks/useWebsocket'
 import TextArea from 'antd/es/input/TextArea'
 import { RiMailSendLine } from 'react-icons/ri'
 import { useGetMeQuery } from '@/entities/user'
-import { addMessage, messageSelector, setMessages, useGetMessagesQuery, useMakeMessageReadMutation } from '@/entities/message'
+import { messageSelector, setQueryData, useGetMessagesQuery, useMakeMessageReadMutation } from '@/entities/message'
 import cs from 'classnames'
-import { useAppDispatch, useAppSelector } from '@/shared/hooks/reduxToolkit'
+import {useAppDispatch, useAppSelector } from '@/shared/hooks/reduxToolkit'
 import WebSocketSingleton from '@/shared/hooks/useWebsocket'
-import { Divider } from 'antd'
+
 
 interface IProps {
     contactId: number
@@ -17,15 +16,18 @@ interface IProps {
 
 export const ChatPage: FC<IProps> = ({contactId}) => {
   const dispatch = useAppDispatch()
+  const {messages} = useAppSelector(messageSelector)
   const [typing, setTyping] = useState<boolean>(false)
   const [receiverTyping, SetReceiverTyping] = useState<{receiverId: number, value: boolean}>()
   const [message, setMessage] = useState<string | undefined>()
-  const {messages: messagesFromStore} = useAppSelector(messageSelector)
   const {data: user} = useGetMeQuery()
   const socket = WebSocketSingleton.getInstance()
   const {id: senderId} = user || {}
-  const {data: messages, refetch, isLoading} =  useGetMessagesQuery({senderId: +senderId!, receiverId: contactId}, {skip: senderId ? false : true})
-   const [makeMessagesRead] =  useMakeMessageReadMutation()
+  const {refetch, isUninitialized} = useGetMessagesQuery({senderId: +senderId!, receiverId: contactId}, {skip: senderId ? false : true})
+  const [makeMessagesRead] =  useMakeMessageReadMutation()
+  let isMounted = useRef(false)
+    console.log(messages)
+
     const handleSend = async ()=> {
       socket?.emit('message', {content: message, senderId, receiverId: contactId})
       setMessage(undefined)
@@ -33,12 +35,21 @@ export const ChatPage: FC<IProps> = ({contactId}) => {
       refetch()
     }
 
+
+
     useEffect(()=> {
+
       makeMessagesRead({userId: senderId!, contactId})
-    }, [])
+      if(!isUninitialized) {
+        refetch()
+      }
+ 
+      dispatch(setQueryData({senderId: +senderId!, receiverId: contactId}))
+
+     isMounted.current = true
+    }, [senderId, contactId])
     
     useEffect(()=> {
-      messages && dispatch(setMessages(messages))
       makeMessagesRead({userId: senderId!, contactId})
     }, [messages])
     
@@ -50,7 +61,6 @@ export const ChatPage: FC<IProps> = ({contactId}) => {
     useEffect(()=> {
       try {
         socket?.on('typing', (data)=>{ SetReceiverTyping(data)})
-        socket?.on('receiveMessage', (data)=>{ dispatch(addMessage(data.message)); console.log(messagesFromStore)})
       } catch(e) {
         console.error(e)
       }
@@ -62,7 +72,7 @@ export const ChatPage: FC<IProps> = ({contactId}) => {
   return (
     <div className={styles.root} >
         <h1 className={styles.title} >Чат</h1>
-        <ul className={styles.messagesHolder} >{messagesFromStore?.map(({id, content, senderId: sender})=> {
+        <ul className={styles.messagesHolder} >{messages?.map(({id, content, senderId: sender})=> {
           return <li key={id} className={cs(styles.message, styles[senderId && +senderId === sender ? 'senderMessage':'receiverMessage'])} >{content}</li>
         })}
         {receiverIsTyping && receiverTypingId === contactId ?<div className={styles.typing} >печатает</div>: <div></div>}

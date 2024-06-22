@@ -25,6 +25,9 @@ export class MessagesService {
                 ]
             
             } ,
+            orderBy: {
+                timestamp: 'asc'
+            },
             include: {
                 receiver: true
             }

@@ -6,10 +6,12 @@ import { IMessage } from "../interfaces/message"
 
 type InitialState = {
     messages: IMessage[]
+    queryData: {senderId: number, receiverId: number} | undefined
 }
 
 const initialState: InitialState = {
-    messages: []
+    messages: [],
+    queryData: undefined
 }
 
 
@@ -17,6 +19,9 @@ const slice = createSlice({
     name: 'message',
     initialState,
     reducers: {
+        setQueryData(state, action: PayloadAction<{senderId: number, receiverId: number}>) {
+          state.queryData = action.payload
+        },
         setMessages(state, action: PayloadAction<IMessage[]>){
           state.messages = action.payload
         },
@@ -26,5 +31,5 @@ const slice = createSlice({
     }
 })
 
-export const {setMessages, addMessage} = slice.actions
+export const {setMessages, addMessage, setQueryData} = slice.actions
 export const messageSlice = slice.reducer
