@@ -25,8 +25,8 @@ export const ChatPage: FC<IProps> = ({contactId}) => {
   const {id: senderId} = user || {}
   const {refetch, isUninitialized} = useGetMessagesQuery({senderId: +senderId!, receiverId: contactId}, {skip: senderId ? false : true})
   const [makeMessagesRead] =  useMakeMessageReadMutation()
-  let isMounted = useRef(false)
-    console.log(messages)
+
+  
 
     const handleSend = async ()=> {
       socket?.emit('message', {content: message, senderId, receiverId: contactId})
@@ -46,7 +46,7 @@ export const ChatPage: FC<IProps> = ({contactId}) => {
  
       dispatch(setQueryData({senderId: +senderId!, receiverId: contactId}))
 
-     isMounted.current = true
+  
     }, [senderId, contactId])
     
     useEffect(()=> {

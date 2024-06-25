@@ -45,14 +45,19 @@ export class MessagesService {
     }
 
     async makeRead({userId, contactId}: {userId: number, contactId: number}) {
-        await this.db.message.updateMany({
-            where: {
-                senderId: contactId,
-                receiverId: userId
-            },
-            data: {
-                read: true
-            }
-        })
+        try {
+            await this.db.message.updateMany({
+                where: {
+                    senderId: contactId,
+                    receiverId: userId
+                },
+                data: {
+                    read: true
+                }
+            })
+        } catch(e) {
+            console.error(e)
+        }
+    
     }
 }

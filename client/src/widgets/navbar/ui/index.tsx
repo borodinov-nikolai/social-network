@@ -1,20 +1,21 @@
 'use client'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import styles from './Navbar.module.scss'
 import { Link } from '@/navigation'
 import { useTranslations } from 'next-intl'
 import { useGetMessagesUnreadCountQuery } from '@/entities/message'
 import { useGetMeQuery } from '@/entities/user'
 import { Badge } from 'antd'
+import { usePathname } from 'next/navigation'
 
 
 
 export const Navbar = () => {
+
   const t = useTranslations('navbar')
   const {data: user} = useGetMeQuery()
   const {data: messagesUnreadCount} = useGetMessagesUnreadCountQuery(user?.id!, {skip: user?.id ? false: true})
-  
-
+ 
   
 
   return (

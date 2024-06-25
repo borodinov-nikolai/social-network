@@ -19,7 +19,7 @@ const slice = createSlice({
     name: 'message',
     initialState,
     reducers: {
-        setQueryData(state, action: PayloadAction<{senderId: number, receiverId: number}>) {
+        setQueryData(state, action: PayloadAction<{senderId: number, receiverId: number} | undefined>) {
           state.queryData = action.payload
         },
         setMessages(state, action: PayloadAction<IMessage[]>){
