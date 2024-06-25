@@ -1,0 +1,17 @@
+@import '../../../../shared/styles/mixins/breakpoints';
+
+
+
+.desktopNavbar {
+    display: none;
+}
+
+
+@include breakpoint(md) {
+    .mobileNavbar {
+        display: none;
+    }
+    .desktopNavbar {
+        display: block;
+    }
+}

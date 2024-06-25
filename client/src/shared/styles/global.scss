@@ -11,6 +11,10 @@ body {
     background: var(--primary-background-color);
 }
 
+main {
+    min-height: 100vh;
+}
+
 .container {
     padding: 0 20px;
     max-width: 1200px;
@@ -21,13 +25,23 @@ body {
     display: flex;
 }
 
-.main__navbar {
-    flex-basis: 20%;
-}
+
 
 .main__content {
     padding-top: 20px;
-    flex-basis: 80%;
+   
+}
+
+
+@include breakpoint(md) {
+    .main__navbar {
+        display: block;
+        flex-basis: 20%;
+    }
+
+    .main__content {
+        flex-basis: 80%;
+    }
 }
 
 @include breakpoint(xl) {

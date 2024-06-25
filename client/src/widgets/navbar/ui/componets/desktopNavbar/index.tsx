@@ -1,16 +1,16 @@
 'use client'
-import React, { useEffect, useState } from 'react'
-import styles from './Navbar.module.scss'
+import React from 'react'
+import styles from './DesktopNavbar.module.scss'
 import { Link } from '@/navigation'
 import { useTranslations } from 'next-intl'
 import { useGetMessagesUnreadCountQuery } from '@/entities/message'
 import { useGetMeQuery } from '@/entities/user'
 import { Badge } from 'antd'
-import { usePathname } from 'next/navigation'
 
 
 
-export const Navbar = () => {
+
+export const DesktopNavbar = () => {
 
   const t = useTranslations('navbar')
   const {data: user} = useGetMeQuery()
