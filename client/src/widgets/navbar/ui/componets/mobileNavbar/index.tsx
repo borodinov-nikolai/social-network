@@ -17,7 +17,7 @@ export const MobileNavbar = () => {
   const {data: messagesUnreadCount} = useGetMessagesUnreadCountQuery(user?.id!, {skip: user?.id ? false: true})
   return (
     <div className={styles.root} >
-      <div className='container' >
+     
         <nav >
                  <ul className={styles.list}>
                 <li><Link href={'/'} ><MdRssFeed /></Link></li>
@@ -30,7 +30,7 @@ export const MobileNavbar = () => {
                 <li><Link href={'/'} ><PiVideoFill /></Link></li>
             </ul>
         </nav>
-      </div>
+
     </div>
   )
 }

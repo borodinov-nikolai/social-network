@@ -1,20 +1,20 @@
+'use client'
 import React from 'react'
 import styles from './FeedPage.module.scss'
-import { Button } from 'antd'
-import { Link } from '@/navigation'
 import Image from 'next/image'
 import { imageUrl } from '@/entities/image'
 import { getPosts } from '@/entities/post'
+import { AddPostBtn } from '@/features/addPostBtn'
+
 
 
 
 export const FeedPage = async () => {
   const posts = await getPosts()
- 
+
   return (
     <div className={styles.root} >
-        <div className='container' >
-          <div className={styles.shareBtnHolder} ><Link href={'feed/add-post'} ><Button type='primary' >Поделиться</Button></Link></div>
+        <AddPostBtn/>
           <ul className={styles.postsList} >
             {posts?.map(({id, title, text, user, image, date})=>{
               const splitedDate = date.split('T')
@@ -33,7 +33,7 @@ export const FeedPage = async () => {
             </li>}
             )}
           </ul>
-        </div>
+    
     </div>
   )
 }

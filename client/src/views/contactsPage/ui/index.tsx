@@ -34,7 +34,7 @@ export const ContactsPage = () => {
   return (
     <div className={styles.root} >
       <div ref={ref} className={styles.search} >
-        <label htmlFor="">Поиск контактов</label>
+        <label htmlFor="">Поиск</label>
         <Input onClick={()=> setShowSearchResult(true)} onChange={(e)=> handleInputChange(e.target.value)}  />
         {showSearhResult && <div onBlur={()=> setShowSearchResult(false)} className={styles.searchResult} >
         <ul className={styles.usersList} >
