@@ -12,6 +12,8 @@ COPY . .
 
 RUN npm run build
 
-EXPOSE 5000
+EXPOSE 3000
 
-CMD npx prisma db push && npm run start:prod
+
+
+CMD ["npm", "start"]
