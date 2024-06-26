@@ -13,5 +13,18 @@
       "groups": "Groups",
       "music": "Music",
       "videos": "Videos"
+    },
+    "profile": {
+      "title": "Change personal data",
+      "logout": "Logout",
+      "login": "Login",
+      "avatar": "Avatar",
+      "change file": "Change file",
+      "save": "Save"
+    },
+    "common": {
+      "shareBtn": "Share",
+      "settings": "Settings"
+
     }
   }

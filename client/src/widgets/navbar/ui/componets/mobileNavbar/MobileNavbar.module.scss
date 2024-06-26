@@ -5,11 +5,11 @@
     width: 100vw;
     height: 50px;
     position: fixed;
-    bottom: 0;
+    bottom: -2px;
     left: 0;
     background: var(--secondary-background-color);
     z-index: 10000;
-    border-top: var(--border-color);
+    border-top: 1px solid var(--border-color);
 }
 
 .list {

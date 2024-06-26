@@ -5,10 +5,12 @@ import { Controller,SubmitHandler, useForm } from 'react-hook-form'
 import { Button, Input, Upload } from 'antd'
 import { IUserUpdateDto, useGetMeQuery, useUpdateMeMutation } from '@/entities/user'
 import { imageUrl } from '@/entities/image'
+import { useTranslations } from 'next-intl'
 
 
 
 export const SettingsPage = () => {
+  const t = useTranslations('profile')
   const [fileList, setFileList] = useState<any | undefined>()
   const {data: user} = useGetMeQuery()
   const [updateMe, {isLoading}] = useUpdateMeMutation()
@@ -57,10 +59,10 @@ export const SettingsPage = () => {
 
   return (
     <div className={styles.root} >
-      <h1 className={styles.title} >Изменить личные данные</h1>
+      <h1 className={styles.title} >{t('title')}</h1>
        <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
         <div className={styles.formItem} >
-          <label htmlFor="">Логин</label>
+          <label htmlFor="">{t('login')}</label>
            <Controller
            name='login'
            control={control}
@@ -82,19 +84,19 @@ export const SettingsPage = () => {
         </div>
 
       <div className={styles.formItem} >
-          <label htmlFor="">Аватар</label>
+          <label htmlFor="">{t('avatar')}</label>
            <Controller
            name='avatar'
            control={control}
            render={({field})=> 
           <Upload 
             fileList={fileList}
-            listType="picture-card" maxCount={1} onChange={(e)=>{field.onChange(e.file.originFileObj); setFileList(e.fileList)}} > Выбрать файл </Upload>
+            listType="picture-card" maxCount={1} onChange={(e)=>{field.onChange(e.file.originFileObj); setFileList(e.fileList)}} >{t('change file')}</Upload>
           }
            />
         </div>
 
-        <div className={styles.submitBtnHolder} > <Button htmlType='submit'  type='primary' >Сохранить</Button>  </div>
+        <div className={styles.submitBtnHolder} > <Button htmlType='submit'  type='primary' >{t('save')}</Button>  </div>
 
        </form>
     </div>

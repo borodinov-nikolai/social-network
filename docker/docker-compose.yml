@@ -9,9 +9,9 @@ services:
     ports:
       - '127.0.0.1:5432:5432'
 
-  back:
+  server:
     build:
-      context: ../back
+      context: ../server
       dockerfile: Dockerfile
     restart: always
     ports:
@@ -19,12 +19,12 @@ services:
     depends_on:
       - db
 
-  front:
+  client:
     build:
-      context: ../front
+      context: ../client
       dockerfile: Dockerfile
     restart: always
     ports:
       - '127.0.0.1:3000:3000'
     depends_on:
-      - back
+      - server

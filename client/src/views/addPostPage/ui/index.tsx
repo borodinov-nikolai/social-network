@@ -34,6 +34,7 @@ export const AddPostPage = () => {
     addPost(formData)
     router.push('/feed')
   }
+  
   return (
     <div className={styles.root} >
     <div className={styles.inner} >

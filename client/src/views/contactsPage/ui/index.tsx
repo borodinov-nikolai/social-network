@@ -16,11 +16,11 @@ import { Link } from '@/navigation'
 export const ContactsPage = () => {
   const [search, setSearch] = useState<string>('')
   const [showSearhResult, setShowSearchResult] = useState<boolean>(false)
-  const {data:user} = useGetMeQuery()
+  const {data:user, refetch} = useGetMeQuery()
   const {data:users} = useGetAllUsersQuery({search})
   const [addContact] = useAddContactMutation()
   const ref = useClickOutside(()=>setShowSearchResult(false))
-
+    
 
   
 
@@ -43,7 +43,7 @@ export const ContactsPage = () => {
               return <li className={styles.userCard} key={id} >
                  <Avatar src={imageUrl + avatar} className={styles.avatar} size={50} icon={<MdAccountCircle/>} />
                 <p>{login}</p>
-                <div onClick={()=>{addContact({contactId: +id}); setShowSearchResult(false)}} className={styles.addContact} >
+                <div onClick={()=>{addContact({contactId: +id}); setShowSearchResult(false); refetch()}} className={styles.addContact} >
                   <IoPersonAddOutline />
                 </div>
                 </li>
