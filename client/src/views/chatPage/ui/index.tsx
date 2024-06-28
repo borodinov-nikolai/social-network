@@ -1,5 +1,5 @@
 'use client'
-import React, { FC, useEffect, useRef, useState } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 import styles from './ChatPage.module.scss'
 import TextArea from 'antd/es/input/TextArea'
 import { RiMailSendLine } from 'react-icons/ri'
@@ -16,14 +16,14 @@ interface IProps {
 
 export const ChatPage: FC<IProps> = ({contactId}) => {
   const dispatch = useAppDispatch()
-  const {messages} = useAppSelector(messageSelector)
+  // const {messages} = useAppSelector(messageSelector)
   const [typing, setTyping] = useState<boolean>(false)
   const [receiverTyping, SetReceiverTyping] = useState<{receiverId: number, value: boolean}>()
   const [message, setMessage] = useState<string | undefined>()
   const {data: user} = useGetMeQuery()
   const socket = WebSocketSingleton.getInstance()
   const {id: senderId} = user || {}
-  const {refetch, isUninitialized} = useGetMessagesQuery({senderId: +senderId!, receiverId: contactId}, {skip: senderId ? false : true})
+  const {data: messages, refetch, isUninitialized} = useGetMessagesQuery({senderId: +senderId!, receiverId: contactId}, {skip: senderId ? false : true})
   const [makeMessagesRead] =  useMakeMessageReadMutation()
 
   

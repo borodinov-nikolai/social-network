@@ -33,6 +33,7 @@ export const AddPostPage = () => {
     formData.append('image', file[0].originFileObj)
     addPost(formData)
     router.push('/feed')
+    router.refresh()
   }
   
   return (
